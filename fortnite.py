@@ -313,7 +313,7 @@ async def event_friend_message(message: fortnitepy.FriendMessage) -> None:
             await client.user.party.me.clear_emote()
             await client.user.party.me.set_emote(asset=cosmetic.id)
 
-        #except BenBotAsync.exceptions.NotFound:
+        except BenBotAsync.exceptions.NotFound:
             await message.reply(f"Couldn't find an emote with the name: {content}.")
             ##print(f"[PartyBot] [{time()}] Couldn't find an emote with the name: {content}.")
 
@@ -331,7 +331,7 @@ async def event_friend_message(message: fortnitepy.FriendMessage) -> None:
             ##print(f"[PartyBot] [{time()}] Set pickaxe to: {cosmetic.id}.")
             await client.user.party.me.set_pickaxe(asset=cosmetic.id)
 
-        #except BenBotAsync.exceptions.NotFound:
+        except BenBotAsync.exceptions.NotFound:
             await message.reply(f"Couldn't find a pickaxe with the name: {content}.")
             ##print(f"[PartyBot] [{time()}] Couldn't find a pickaxe with the name: {content}.")
 
@@ -349,7 +349,7 @@ async def event_friend_message(message: fortnitepy.FriendMessage) -> None:
             ##print(f"[PartyBot] [{time()}] Set pet to: {cosmetic.id}.")
             await client.user.party.me.set_pet(asset=cosmetic.id)
 
-        #except BenBotAsync.exceptions.NotFound:
+        except BenBotAsync.exceptions.NotFound:
             await message.reply(f"Couldn't find a pet with the name: {content}.")
             ##print(f"[PartyBot] [{time()}] Couldn't find a pet with the name: {content}.")
 
@@ -367,7 +367,7 @@ async def event_friend_message(message: fortnitepy.FriendMessage) -> None:
             ##print(f"[PartyBot] [{time()}] Set pet to: {cosmetic.id}.")
             await client.user.party.me.set_emoji(asset=cosmetic.id)
 
-        #except BenBotAsync.exceptions.NotFound:
+        except BenBotAsync.exceptions.NotFound:
             await message.reply(f"Couldn't find an emoji with the name: {content}.")
             ##print(f"[PartyBot] [{time()}] Couldn't find an emoji with the name: {content}.")
 
@@ -385,7 +385,7 @@ async def event_friend_message(message: fortnitepy.FriendMessage) -> None:
             ##print(f"[PartyBot] [{time()}] Set contrail to: {cosmetic.id}.")
             await client.user.party.me.set_contrail(asset=cosmetic.id)
 
-        #except BenBotAsync.exceptions.NotFound:
+        except BenBotAsync.exceptions.NotFound:
             await message.reply(f"Couldn't find a contrail with the name: {content}.")
             ##print(f"[PartyBot] [{time()}] Couldn't find an contrail with the name: {content}.")
 
@@ -590,7 +590,7 @@ async def event_friend_message(message: fortnitepy.FriendMessage) -> None:
                 await client.user.party.me.clear_emote()
                 await client.user.party.me.set_emote(asset='EID_IceKing')
                 await message.reply(f'Pickaxe set to {content} & Point it Out played.')
-            #except BenBotAsync.exceptions.NotFound:
+            except BenBotAsync.exceptions.NotFound:
                 await message.reply(f"Couldn't find a pickaxe with the name: {content}")
 
     elif "!ready" in args[0].lower():
