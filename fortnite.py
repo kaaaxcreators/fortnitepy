@@ -225,9 +225,9 @@ async def event_ready() -> None:
     for pending in list(client.pending_friends.values()):
         if pending.direction == 'INBOUND':
             friend = await pending.accept() if data["friend_accept"] else await pending.decline()
-            if isinstance(friend, fortnitepy.Friend):
+            ##if isinstance(friend, fortnitepy.Friend):
                 ##print(f"[PartyBot] [{time()}] Accepted friend request from: {friend.display_name}.")
-            else:
+            ##else:
                 ##print(f"[PartyBot] [{time()}] Declined friend request from: {pending.display_name}.")
 
 
