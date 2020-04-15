@@ -918,7 +918,7 @@ async def event_friend_message(message: fortnitepy.FriendMessage) -> None:
         if data['friend_accept']:
             await message.reply('All friend requests will be accepted so there is no need to add manually.')
             ##print(f'[PartyBot] [{time()}] !friend command ignored as friend requests will be accepted '
-                  'so there is no need to add manually.')
+                  ##'so there is no need to add manually.')
         else:
             user = await client.fetch_profile(content)
 
