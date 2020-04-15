@@ -707,7 +707,7 @@ async def event_friend_message(message: fortnitepy.FriendMessage) -> None:
             ##print(f'[PartyBot] [{time()}] Party privacy set to {client.user.party.privacy}.')
 
         except fortnitepy.errors.Forbidden:
-            ###await message.reply(f"Couldn't set party privacy to {args[1]}, as I'm not party leader.")
+            await message.reply(f"Couldn't set party privacy to {args[1]}, as I'm not party leader.")
             ##print(crayons.red(f"[PartyBot] [{time()}] [ERROR] "
                               ##"Failed to set party privacy as I don't have the required permissions."))
 
