@@ -672,7 +672,7 @@ async def event_friend_message(message: fortnitepy.FriendMessage) -> None:
             except fortnitepy.errors.Forbidden:
                 await message.reply(f"Couldn't promote {member.display_name}, as I'm not party leader.")
                 ###print(crayons.red(f"[PartyBot] [{time()}] [ERROR] "
-                                  "Failed to kick member as I don't have the required permissions."))
+                                 ## "Failed to kick member as I don't have the required permissions."))
 
     elif "playlist_" in args[0].lower():
         try:
@@ -681,7 +681,7 @@ async def event_friend_message(message: fortnitepy.FriendMessage) -> None:
         except fortnitepy.errors.Forbidden:
             await message.reply(f"Couldn't set gamemode to {args[1]}, as I'm not party leader.")
             ##print(crayons.red(f"[PartyBot] [{time()}] [ERROR] "
-                              "Failed to set gamemode as I don't have the required permissions."))
+                              ##"Failed to set gamemode as I don't have the required permissions."))
 
     elif "!id" in args[0].lower():
         user = await client.fetch_profile(content, cache=False, raw=False)
@@ -709,7 +709,7 @@ async def event_friend_message(message: fortnitepy.FriendMessage) -> None:
         except fortnitepy.errors.Forbidden:
             await message.reply(f"Couldn't set party privacy to {args[1]}, as I'm not party leader.")
             ##print(crayons.red(f"[PartyBot] [{time()}] [ERROR] "
-                              "Failed to set party privacy as I don't have the required permissions."))
+                              ##"Failed to set party privacy as I don't have the required permissions."))
 
     elif "!copy" in args[0].lower():
         if len(args) == 1:
