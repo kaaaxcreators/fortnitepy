@@ -687,7 +687,7 @@ async def event_friend_message(message: fortnitepy.FriendMessage) -> None:
         user = await client.fetch_profile(content, cache=False, raw=False)
         try:
             await message.reply(f"{content}'s Epic ID is: {user.id}")
-        #except AttributeError:
+        except AttributeError:
             await message.reply(f"I couldn't find an Epic account with the name: {content}.")
 
     elif "!privacy" in args[0].lower():
@@ -934,7 +934,7 @@ async def event_friend_message(message: fortnitepy.FriendMessage) -> None:
 if (data['email'] and data['password']) and (data['email'] != 'email@email.com' and data['password'] != 'password1'):
     try:
         client.run()
-    #except fortnitepy.errors.AuthException as e:
+    except fortnitepy.errors.AuthException as e:
         print(crayons.red(f"[PartyBot] [{time()}] [ERROR] {e}"))
 else:
     print(crayons.red(f"[PartyBot] [{time()}] [ERROR] Failed to login as no (or default) account details provided."))
