@@ -146,7 +146,7 @@ async def start_discord_rich_presence() -> None:
     try:
         await rpc.connect()
     except Exception as discord_error:
-        ##print(f'There was an error {discord_error}')
+        print(f'There was an error {discord_error}')
 
     start_time = datetime.datetime.now().timestamp()
 
