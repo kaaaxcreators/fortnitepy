@@ -649,7 +649,7 @@ async def event_friend_message(message: fortnitepy.FriendMessage) -> None:
                 await member.kick()
                 await message.reply(f"Kicked user: {member.display_name}.")
                 ###print(f"[PartyBot] [{time()}] Kicked user: {member.display_name}")
-            #except fortnitepy.errors.Forbidden:
+            except fortnitepy.errors.Forbidden:
                 await message.reply(f"Couldn't kick {member.display_name}, as I'm not party leader.")
                 ###print(crayons.red(f"[PartyBot] [{time()}] [ERROR] "
                                   ##"Failed to kick member as I don't have the required permissions."))
@@ -669,7 +669,7 @@ async def event_friend_message(message: fortnitepy.FriendMessage) -> None:
                 await member.promote()
                 await message.reply(f"Promoted user: {member.display_name}.")
                 ###print(f"[PartyBot] [{time()}] Promoted user: {member.display_name}")
-            #except fortnitepy.errors.Forbidden:
+            except fortnitepy.errors.Forbidden:
                 await message.reply(f"Couldn't promote {member.display_name}, as I'm not party leader.")
                 ###print(crayons.red(f"[PartyBot] [{time()}] [ERROR] "
                                  ## "Failed to kick member as I don't have the required permissions."))
@@ -678,7 +678,7 @@ async def event_friend_message(message: fortnitepy.FriendMessage) -> None:
         try:
             await client.user.party.set_playlist(playlist=args[0])
             await message.reply(f'Gamemode set to {args[0]}')
-        #except fortnitepy.errors.Forbidden:
+        except fortnitepy.errors.Forbidden:
             await message.reply(f"Couldn't set gamemode to {args[1]}, as I'm not party leader.")
             ##print(crayons.red(f"[PartyBot] [{time()}] [ERROR] "
                               ##"Failed to set gamemode as I don't have the required permissions."))
@@ -706,7 +706,7 @@ async def event_friend_message(message: fortnitepy.FriendMessage) -> None:
             ###await message.reply(f'Party privacy set to {client.user.party.privacy}.')
             ##print(f'[PartyBot] [{time()}] Party privacy set to {client.user.party.privacy}.')
 
-        #except fortnitepy.errors.Forbidden:
+        except fortnitepy.errors.Forbidden:
             ###await message.reply(f"Couldn't set party privacy to {args[1]}, as I'm not party leader.")
             ##print(crayons.red(f"[PartyBot] [{time()}] [ERROR] "
                               ##"Failed to set party privacy as I don't have the required permissions."))
@@ -900,7 +900,7 @@ async def event_friend_message(message: fortnitepy.FriendMessage) -> None:
             try:
                 await friend.join_party()
                 await message.reply(f'Joined the party of {friend.display_name}.')
-            #except fortnitepy.errors.Forbidden:
+            except fortnitepy.errors.Forbidden:
                 await message.reply('Failed to join party since it is private.')
             #except fortnitepy.errors.PartyError:
                 await message.reply('Party not found, are you sure Fortnite is open?')
