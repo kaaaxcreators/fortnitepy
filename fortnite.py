@@ -53,7 +53,7 @@ except ModuleNotFoundError as e:
     print(e)
     print('Failed to import 1 or more modules, running "INSTALL PACKAGES.bat"'
           'might fix the issue, if not please create an issue or join'
-         'the support server.')
+          'the support server.')
     sys.exit()
 
 # Imports uvloop and uses it if installed (Unix only).
@@ -174,9 +174,9 @@ async def start_discord_rich_presence() -> None:
 
         await asyncio.sleep(20)
 
-##print(crayons.cyan(f'[PartyBot] [{time()}] PartyBot made by xMistt. '
-##                   'Massive credit to Terbau for creating the library.'))
-##print(crayons.cyan(f'[PartyBot] [{time()}] Discord server: https://discord.gg/fnpy - For support, questions, etc.'))
+print(crayons.cyan(f'[PartyBot] [{time()}] PartyBot made by xMistt. '
+                   'Massive credit to Terbau for creating the library.'))
+print(crayons.cyan(f'[PartyBot] [{time()}] Discord server: https://discord.gg/fnpy - For support, questions, etc.'))
 
 with open('config.json') as f:
     data = json.load(f)
@@ -215,7 +215,7 @@ async def event_device_auth_generate(details: dict, email: str) -> None:
 
 @client.event
 async def event_ready() -> None:
-    ##print(crayons.green(f'[PartyBot] [{time()}] Client ready as {client.user.display_name}.'))
+    print(crayons.green(f'[PartyBot] [{time()}] Client ready as {client.user.display_name}.'))
 
     discord_exists = await client.loop.run_in_executor(None, check_if_process_running, 'Discord')
 
@@ -225,28 +225,28 @@ async def event_ready() -> None:
     for pending in list(client.pending_friends.values()):
         if pending.direction == 'INBOUND':
             friend = await pending.accept() if data["friend_accept"] else await pending.decline()
-            ##if isinstance(friend, fortnitepy.Friend):
-                ##print(f"[PartyBot] [{time()}] Accepted friend request from: {friend.display_name}.")
-            ##else:
-                ##print(f"[PartyBot] [{time()}] Declined friend request from: {pending.display_name}.")
+            if isinstance(friend, fortnitepy.Friend):
+                print(f"[PartyBot] [{time()}] Accepted friend request from: {friend.display_name}.")
+            else:
+                print(f"[PartyBot] [{time()}] Declined friend request from: {pending.display_name}.")
 
 
 @client.event
 async def event_party_invite(invite: fortnitepy.PartyInvitation) -> None:
     await invite.accept()
-    ##print(f'[PartyBot] [{time()}] Accepted party invite from {invite.sender.display_name}.')
+    print(f'[PartyBot] [{time()}] Accepted party invite from {invite.sender.display_name}.')
 
 
 @client.event
 async def event_friend_request(request: fortnitepy.PendingFriend) -> None:
-    ##print(f"[PartyBot] [{time()}] Received friend request from: {request.display_name}.")
+    print(f"[PartyBot] [{time()}] Received friend request from: {request.display_name}.")
 
     if data['friend_accept']:
         await request.accept()
-        ##print(f"[PartyBot] [{time()}] Accepted friend request from: {request.display_name}.")
+        print(f"[PartyBot] [{time()}] Accepted friend request from: {request.display_name}.")
     else:
         await request.decline()
-        ##print(f"[PartyBot] [{time()}] Declined friend request from: {request.display_name}.")
+        print(f"[PartyBot] [{time()}] Declined friend request from: {request.display_name}.")
 
 
 @client.event
@@ -260,7 +260,7 @@ async def event_friend_message(message: fortnitepy.FriendMessage) -> None:
     split = args[1:]
     content = " ".join(split)
 
-    ##print(f'[PartyBot] [{time()}] {message.author.display_name}: {message.content}')
+    print(f'[PartyBot] [{time()}] {message.author.display_name}: {message.content}')
 
     if "!skin" in args[0].lower():
         try:
@@ -273,7 +273,7 @@ async def event_friend_message(message: fortnitepy.FriendMessage) -> None:
             )
 
             await message.reply(f'Skin set to {cosmetic.id}.')
-            ##print(f"[PartyBot] [{time()}] Set skin to: {cosmetic.id}.")
+            print(f"[PartyBot] [{time()}] Set skin to: {cosmetic.id}.")
             await client.user.party.me.set_outfit(asset=cosmetic.id)
 
         except BenBotAsync.exceptions.NotFound:
@@ -291,31 +291,31 @@ async def event_friend_message(message: fortnitepy.FriendMessage) -> None:
             )
 
             await message.reply(f'Backpack set to {cosmetic.id}.')
-            ##print(f"[PartyBot] [{time()}] Set backpack to: {cosmetic.id}.")
+            print(f"[PartyBot] [{time()}] Set backpack to: {cosmetic.id}.")
             await client.user.party.me.set_backpack(asset=cosmetic.id)
 
         except BenBotAsync.exceptions.NotFound:
             await message.reply(f"Couldn't find a backpack with the name: {content}.")
-            ##print(f"[PartyBot] [{time()}] Couldn't find a backpack with the name: {content}.")
+            print(f"[PartyBot] [{time()}] Couldn't find a backpack with the name: {content}.")
 
     elif "!emote" in args[0].lower():
         try:
             cosmetic = await BenBotAsync.get_cosmetic(
-                lang="en",
-                searchLang="en",
+                lang="de",
+                searchLang="de",
                 matchMethod="contains",
                 name=content,
                 backendType="AthenaDance"
             )
 
             await message.reply(f'Emote set to {cosmetic.id}.')
-            ##print(f"[PartyBot] [{time()}] Set emote to: {cosmetic.id}.")
+            print(f"[PartyBot] [{time()}] Set emote to: {cosmetic.id}.")
             await client.user.party.me.clear_emote()
             await client.user.party.me.set_emote(asset=cosmetic.id)
 
         except BenBotAsync.exceptions.NotFound:
             await message.reply(f"Couldn't find an emote with the name: {content}.")
-            ##print(f"[PartyBot] [{time()}] Couldn't find an emote with the name: {content}.")
+            print(f"[PartyBot] [{time()}] Couldn't find an emote with the name: {content}.")
 
     elif "!pickaxe" in args[0].lower():
         try:
@@ -328,12 +328,12 @@ async def event_friend_message(message: fortnitepy.FriendMessage) -> None:
             )
 
             await message.reply(f'Pickaxe set to {cosmetic.id}.')
-            ##print(f"[PartyBot] [{time()}] Set pickaxe to: {cosmetic.id}.")
+            print(f"[PartyBot] [{time()}] Set pickaxe to: {cosmetic.id}.")
             await client.user.party.me.set_pickaxe(asset=cosmetic.id)
 
         except BenBotAsync.exceptions.NotFound:
             await message.reply(f"Couldn't find a pickaxe with the name: {content}.")
-            ##print(f"[PartyBot] [{time()}] Couldn't find a pickaxe with the name: {content}.")
+            print(f"[PartyBot] [{time()}] Couldn't find a pickaxe with the name: {content}.")
 
     elif "!pet" in args[0].lower():
         try:
@@ -346,12 +346,12 @@ async def event_friend_message(message: fortnitepy.FriendMessage) -> None:
             )
 
             await message.reply(f'Pet set to {cosmetic.id}.')
-            ##print(f"[PartyBot] [{time()}] Set pet to: {cosmetic.id}.")
+            print(f"[PartyBot] [{time()}] Set pet to: {cosmetic.id}.")
             await client.user.party.me.set_pet(asset=cosmetic.id)
 
         except BenBotAsync.exceptions.NotFound:
             await message.reply(f"Couldn't find a pet with the name: {content}.")
-            ##print(f"[PartyBot] [{time()}] Couldn't find a pet with the name: {content}.")
+            print(f"[PartyBot] [{time()}] Couldn't find a pet with the name: {content}.")
 
     elif "!emoji" in args[0].lower():
         try:
@@ -364,12 +364,12 @@ async def event_friend_message(message: fortnitepy.FriendMessage) -> None:
             )
 
             await message.reply(f'Pet set to {cosmetic.id}.')
-            ##print(f"[PartyBot] [{time()}] Set pet to: {cosmetic.id}.")
+            print(f"[PartyBot] [{time()}] Set pet to: {cosmetic.id}.")
             await client.user.party.me.set_emoji(asset=cosmetic.id)
 
         except BenBotAsync.exceptions.NotFound:
             await message.reply(f"Couldn't find an emoji with the name: {content}.")
-            ##print(f"[PartyBot] [{time()}] Couldn't find an emoji with the name: {content}.")
+            print(f"[PartyBot] [{time()}] Couldn't find an emoji with the name: {content}.")
 
     elif "!contrail" in args[0].lower():
         try:
@@ -382,12 +382,12 @@ async def event_friend_message(message: fortnitepy.FriendMessage) -> None:
             )
 
             await message.reply(f'Contrail set to {cosmetic.id}.')
-            ##print(f"[PartyBot] [{time()}] Set contrail to: {cosmetic.id}.")
+            print(f"[PartyBot] [{time()}] Set contrail to: {cosmetic.id}.")
             await client.user.party.me.set_contrail(asset=cosmetic.id)
 
         except BenBotAsync.exceptions.NotFound:
             await message.reply(f"Couldn't find a contrail with the name: {content}.")
-            ##print(f"[PartyBot] [{time()}] Couldn't find an contrail with the name: {content}.")
+            print(f"[PartyBot] [{time()}] Couldn't find an contrail with the name: {content}.")
 
     elif "!purpleskull" in args[0].lower():
         variants = client.user.party.me.create_variants(
@@ -431,7 +431,7 @@ async def event_friend_message(message: fortnitepy.FriendMessage) -> None:
         await client.user.party.me.set_banner(icon=args[1], color=args[2], season_level=args[3])
 
         await message.reply(f'Banner set to: {args[1]}, {args[2]}, {args[3]}.')
-        ##print(f"[PartyBot] [{time()}] Banner set to: {args[1]}, {args[2]}, {args[3]}.")
+        print(f"[PartyBot] [{time()}] Banner set to: {args[1]}, {args[2]}, {args[3]}.")
 
     elif "cid_" in args[0].lower():
         if 'banner' not in args[0].lower():
@@ -445,7 +445,7 @@ async def event_friend_message(message: fortnitepy.FriendMessage) -> None:
             )
 
         await message.reply(f'Skin set to {args[0]}')
-        ##print(f'[PartyBot] [{time()}] Skin set to {args[0]}')
+        print(f'[PartyBot] [{time()}] Skin set to {args[0]}')
 
     elif "vtid_" in args[0].lower():
         vtid = await set_vtid(args[0])
@@ -490,7 +490,7 @@ async def event_friend_message(message: fortnitepy.FriendMessage) -> None:
             )
 
         await message.reply(f'Set variants of {args[1]} to {args[2]} {args[3]}.')
-        ##print(f'[PartyBot] [{time()}] Set variants of {args[1]} to {args[2]} {args[3]}.')
+        print(f'[PartyBot] [{time()}] Set variants of {args[1]} to {args[2]} {args[3]}.')
 
     elif "!checkeredrenegade" in args[0].lower():
         variants = client.user.party.me.create_variants(
@@ -630,14 +630,14 @@ async def event_friend_message(message: fortnitepy.FriendMessage) -> None:
         await client.set_status(content)
 
         await message.reply(f'Status set to {content}')
-        ###print(f'[PartyBot] [{time()}] Status set to {content}.')
+        print(f'[PartyBot] [{time()}] Status set to {content}.')
 
     elif "!leave" in args[0].lower():
         await client.user.party.me.set_emote('EID_Wave')
         await asyncio.sleep(2)
         await client.user.party.me.leave()
         await message.reply('Bye!')
-        ###print(f'[PartyBot] [{time()}] Left the party as I was requested.')
+        print(f'[PartyBot] [{time()}] Left the party as I was requested.')
 
     elif "!kick" in args[0].lower():
         user = await client.fetch_profile(content)
@@ -648,11 +648,11 @@ async def event_friend_message(message: fortnitepy.FriendMessage) -> None:
             try:
                 await member.kick()
                 await message.reply(f"Kicked user: {member.display_name}.")
-                ###print(f"[PartyBot] [{time()}] Kicked user: {member.display_name}")
+                print(f"[PartyBot] [{time()}] Kicked user: {member.display_name}")
             except fortnitepy.errors.Forbidden:
                 await message.reply(f"Couldn't kick {member.display_name}, as I'm not party leader.")
-                ###print(crayons.red(f"[PartyBot] [{time()}] [ERROR] "
-                                  ##"Failed to kick member as I don't have the required permissions."))
+                print(crayons.red(f"[PartyBot] [{time()}] [ERROR] "
+                                  "Failed to kick member as I don't have the required permissions."))
 
     elif "!promote" in args[0].lower():
         if len(args) == 1:
@@ -668,11 +668,11 @@ async def event_friend_message(message: fortnitepy.FriendMessage) -> None:
             try:
                 await member.promote()
                 await message.reply(f"Promoted user: {member.display_name}.")
-                ###print(f"[PartyBot] [{time()}] Promoted user: {member.display_name}")
+                print(f"[PartyBot] [{time()}] Promoted user: {member.display_name}")
             except fortnitepy.errors.Forbidden:
                 await message.reply(f"Couldn't promote {member.display_name}, as I'm not party leader.")
-                ###print(crayons.red(f"[PartyBot] [{time()}] [ERROR] "
-                                 ## "Failed to kick member as I don't have the required permissions."))
+                print(crayons.red(f"[PartyBot] [{time()}] [ERROR] "
+                                  "Failed to kick member as I don't have the required permissions."))
 
     elif "playlist_" in args[0].lower():
         try:
@@ -680,8 +680,8 @@ async def event_friend_message(message: fortnitepy.FriendMessage) -> None:
             await message.reply(f'Gamemode set to {args[0]}')
         except fortnitepy.errors.Forbidden:
             await message.reply(f"Couldn't set gamemode to {args[1]}, as I'm not party leader.")
-            ##print(crayons.red(f"[PartyBot] [{time()}] [ERROR] "
-                              ##"Failed to set gamemode as I don't have the required permissions."))
+            print(crayons.red(f"[PartyBot] [{time()}] [ERROR] "
+                              "Failed to set gamemode as I don't have the required permissions."))
 
     elif "!id" in args[0].lower():
         user = await client.fetch_profile(content, cache=False, raw=False)
@@ -703,13 +703,13 @@ async def event_friend_message(message: fortnitepy.FriendMessage) -> None:
             elif 'private_allow_friends_of_friends' in args[1].lower():
                 await client.user.party.set_privacy(fortnitepy.PartyPrivacy.PRIVATE_ALLOW_FRIENDS_OF_FRIENDS)
 
-            ###await message.reply(f'Party privacy set to {client.user.party.privacy}.')
-            ##print(f'[PartyBot] [{time()}] Party privacy set to {client.user.party.privacy}.')
+            await message.reply(f'Party privacy set to {client.user.party.privacy}.')
+            print(f'[PartyBot] [{time()}] Party privacy set to {client.user.party.privacy}.')
 
         except fortnitepy.errors.Forbidden:
             await message.reply(f"Couldn't set party privacy to {args[1]}, as I'm not party leader.")
-            ##print(crayons.red(f"[PartyBot] [{time()}] [ERROR] "
-                              ##"Failed to set party privacy as I don't have the required permissions."))
+            print(crayons.red(f"[PartyBot] [{time()}] [ERROR] "
+                              "Failed to set party privacy as I don't have the required permissions."))
 
     elif "!copy" in args[0].lower():
         if len(args) == 1:
@@ -902,7 +902,7 @@ async def event_friend_message(message: fortnitepy.FriendMessage) -> None:
                 await message.reply(f'Joined the party of {friend.display_name}.')
             except fortnitepy.errors.Forbidden:
                 await message.reply('Failed to join party since it is private.')
-            #except fortnitepy.errors.PartyError:
+            except fortnitepy.errors.PartyError:
                 await message.reply('Party not found, are you sure Fortnite is open?')
         else:
             await message.reply('Cannot join party as the friend is not found.')
@@ -912,23 +912,23 @@ async def event_friend_message(message: fortnitepy.FriendMessage) -> None:
             data = json.load(f)
             
         await message.reply('Configuration reloaded.')
-        ##print(f'[PartyBot] [{time()}] Configuration successfully reloaded.')
+        print(f'[PartyBot] [{time()}] Configuration successfully reloaded.')
 
     elif "!friend" in args[0].lower():
         if data['friend_accept']:
             await message.reply('All friend requests will be accepted so there is no need to add manually.')
-            ##print(f'[PartyBot] [{time()}] !friend command ignored as friend requests will be accepted '
-                  ##'so there is no need to add manually.')
+            print(f'[PartyBot] [{time()}] !friend command ignored as friend requests will be accepted '
+                  'so there is no need to add manually.')
         else:
             user = await client.fetch_profile(content)
 
             if user is not None:
                 friend = await client.add_friend(user.id)
                 await message.reply(f'Sent/accepted friend request to/from {user.display_name}.')
-                ##print(f'[PartyBot] [{time()}] Sent/accepted friend request to/from {user.display_name}.')
+                print(f'[PartyBot] [{time()}] Sent/accepted friend request to/from {user.display_name}.')
             else:
                 await message.reply(f'Failed to find user with the name: {content}.')
-                ##print(crayons.red(f"[PartyBot] [{time()}] [ERROR] Failed to find a user with the name {content}."))
+                print(crayons.red(f"[PartyBot] [{time()}] [ERROR] Failed to find a user with the name {content}."))
 
 
 if (data['email'] and data['password']) and (data['email'] != 'email@email.com' and data['password'] != 'password1'):
