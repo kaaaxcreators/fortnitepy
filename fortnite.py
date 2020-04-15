@@ -935,6 +935,6 @@ if (data['email'] and data['password']) and (data['email'] != 'email@email.com' 
     try:
         client.run()
     except fortnitepy.errors.AuthException as e:
-        ##print(crayons.red(f"[PartyBot] [{time()}] [ERROR] {e}"))
+        print(crayons.red(f"[PartyBot] [{time()}] [ERROR] {e}"))
 else:
-    ##print(crayons.red(f"[PartyBot] [{time()}] [ERROR] Failed to login as no (or default) account details provided."))
+    print(crayons.red(f"[PartyBot] [{time()}] [ERROR] Failed to login as no (or default) account details provided."))
