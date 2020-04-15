@@ -652,7 +652,7 @@ async def event_friend_message(message: fortnitepy.FriendMessage) -> None:
             except fortnitepy.errors.Forbidden:
                 await message.reply(f"Couldn't kick {member.display_name}, as I'm not party leader.")
                 ###print(crayons.red(f"[PartyBot] [{time()}] [ERROR] "
-                                  "Failed to kick member as I don't have the required permissions."))
+                                  ##"Failed to kick member as I don't have the required permissions."))
 
     elif "!promote" in args[0].lower():
         if len(args) == 1:
