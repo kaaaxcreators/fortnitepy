@@ -93,7 +93,7 @@ def check_if_process_running(name: str) -> bool:
         try:
             if name.lower() in process.name().lower():
                 return True
-        #except (psutil.NoSuchProcess, psutil.AccessDenied, psutil.ZombieProcess):
+        except (psutil.NoSuchProcess, psutil.AccessDenied, psutil.ZombieProcess):
             pass
 
     return False
