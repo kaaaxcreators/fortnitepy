@@ -8,6 +8,7 @@ A fortnite HTTP/XMPP bot coded in Python with party capabilites rewritten by kaa
 ## Language
 !<command>
         language = en
+
 !<command>de
         language = de
 
