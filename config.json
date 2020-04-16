@@ -6,9 +6,9 @@
     "eid": "",
     "banner": "defaultbanner10",
     "banner_colour": "defaultcolor15",
-    "level": 999,
-    "bp_tier": 999,
-    "status": "Spielt Kreativmodus",
+    "level": 105,
+    "bp_tier": 100,
+    "status": "SPIELT KREATIVMODUS",
     "platform": "WIN",
     "debug": false,
     "friend_accept": true

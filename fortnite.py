@@ -46,7 +46,6 @@ try:
     import fortnitepy
     import BenBotAsync
     import aiohttp
-    import pypresence
     import psutil
 
 except ModuleNotFoundError as e:
@@ -137,44 +136,6 @@ async def set_and_update_prop(schema_key: str, new_value: str) -> None:
     await client.user.party.me.patch(updated=prop)
 
 
-async def start_discord_rich_presence() -> None:
-    rpc = pypresence.AioPresence(
-        client_id='698619895910498344',
-        loop=client.loop
-    )
-
-    try:
-        await rpc.connect()
-    except Exception as discord_error:
-        print(f'There was an error {discord_error}')
-
-    start_time = datetime.datetime.now().timestamp()
-
-    while True:
-        try:
-            outfit = (await BenBotAsync.get_cosmetic_from_id(
-                cosmetic_id=client.user.party.me.outfit
-            )).name
-
-        except BenBotAsync.exceptions.NotFound:
-            outfit = client.user.party.me.outfit
-
-        await rpc.update(
-            details=f"Logged in as {client.user.display_name}.",
-            state=f"{client.user.party.leader.display_name}'s party.",
-            large_image="skull_trooper",
-            large_text="discord.gg/fnpy",
-            small_image="outfit",
-            small_text=outfit,
-            start=start_time,
-            party_id=client.user.party.id,
-            party_size=[client.user.party.member_count, 16],
-            join=uuid.uuid4().hex
-        )
-
-        await asyncio.sleep(20)
-
-
 with open('config.json') as f:
     data = json.load(f)
 if data['debug']:
@@ -214,11 +175,6 @@ async def event_device_auth_generate(details: dict, email: str) -> None:
 async def event_ready() -> None:
     print(crayons.green(f'[PartyBot] [{time()}] Client ready as {client.user.display_name}.'))
 
-    discord_exists = await client.loop.run_in_executor(None, check_if_process_running, 'Discord')
-
-    if discord_exists and (sys.platform == 'darwin' or 'linux' in sys.platform.lower()):
-        client.loop.create_task(start_discord_rich_presence())
-
     for pending in list(client.pending_friends.values()):
         if pending.direction == 'INBOUND':
             friend = await pending.accept() if data["friend_accept"] else await pending.decline()
@@ -226,12 +182,6 @@ async def event_ready() -> None:
                 print(f"[PartyBot] [{time()}] Accepted friend request from: {friend.display_name}.")
             else:
                 print(f"[PartyBot] [{time()}] Declined friend request from: {pending.display_name}.")
-
-
-@client.event
-async def event_party_invite(invite: fortnitepy.PartyInvitation) -> None:
-    await invite.accept()
-    print(f'[PartyBot] [{time()}] Accepted party invite from {invite.sender.display_name}.')
 
 
 @client.event
@@ -262,8 +212,8 @@ async def event_friend_message(message: fortnitepy.FriendMessage) -> None:
     if "!skin" in args[0].lower():
         try:
             cosmetic = await BenBotAsync.get_cosmetic(
-                lang="en",
-                searchLang="en",
+                lang="de",
+                searchLang="de",
                 matchMethod="contains",
                 name=content,
                 backendType="AthenaCharacter"
@@ -280,8 +230,8 @@ async def event_friend_message(message: fortnitepy.FriendMessage) -> None:
     elif "!backpack" in args[0].lower():
         try:
             cosmetic = await BenBotAsync.get_cosmetic(
-                lang="en",
-                searchLang="en",
+                lang="de",
+                searchLang="de",
                 matchMethod="contains",
                 name=content,
                 backendType="AthenaBackpack"
@@ -317,8 +267,8 @@ async def event_friend_message(message: fortnitepy.FriendMessage) -> None:
     elif "!pickaxe" in args[0].lower():
         try:
             cosmetic = await BenBotAsync.get_cosmetic(
-                lang="en",
-                searchLang="en",
+                lang="de",
+                searchLang="de",
                 matchMethod="contains",
                 name=content,
                 backendType="AthenaPickaxe"
@@ -335,8 +285,8 @@ async def event_friend_message(message: fortnitepy.FriendMessage) -> None:
     elif "!pet" in args[0].lower():
         try:
             cosmetic = await BenBotAsync.get_cosmetic(
-                lang="en",
-                searchLang="en",
+                lang="de",
+                searchLang="de",
                 matchMethod="contains",
                 name=content,
                 backendType="AthenaPet"
@@ -353,8 +303,8 @@ async def event_friend_message(message: fortnitepy.FriendMessage) -> None:
     elif "!emoji" in args[0].lower():
         try:
             cosmetic = await BenBotAsync.get_cosmetic(
-                lang="en",
-                searchLang="en",
+                lang="de",
+                searchLang="de",
                 matchMethod="contains",
                 name=content,
                 backendType="AthenaEmoji"
@@ -371,8 +321,8 @@ async def event_friend_message(message: fortnitepy.FriendMessage) -> None:
     elif "!contrail" in args[0].lower():
         try:
             cosmetic = await BenBotAsync.get_cosmetic(
-                lang="en",
-                searchLang="en",
+                lang="de",
+                searchLang="de",
                 matchMethod="contains",
                 name=content,
                 backendType="AthenaSkyDiveContrail"
@@ -442,7 +392,7 @@ async def event_friend_message(message: fortnitepy.FriendMessage) -> None:
             )
 
         await message.reply(f'Skin set to {args[0]}')
-        print(f'[PartyBot] [{time()}] Skin set to {args[0]}')
+        print(f'[PartyBot] [{time()}] Skinn set to {args[0]}')
 
     elif "vtid_" in args[0].lower():
         vtid = await set_vtid(args[0])
@@ -531,8 +481,6 @@ async def event_friend_message(message: fortnitepy.FriendMessage) -> None:
 
         await message.reply(f'Backbling set to {args[0]}!')
 
-    elif "!help" in args[0].lower():
-        await message.reply('For a list of commands, goto; https://github.com/xMistt/fortnitepy-bot/wiki/Commands')
 
     elif "PICKAXE_ID_" in args[0].lower():
         await client.user.party.me.set_pickaxe(
@@ -576,8 +524,8 @@ async def event_friend_message(message: fortnitepy.FriendMessage) -> None:
         else:
             try:
                 cosmetic = await BenBotAsync.get_cosmetic(
-                    lang="en",
-                    searchLang="en",
+                    lang="de",
+                    searchLang="de",
                     matchMethod="contains",
                     name=content,
                     backendType="AthenaPickaxe"
