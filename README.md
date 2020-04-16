@@ -6,10 +6,10 @@
 A fortnite HTTP/XMPP bot coded in Python with party capabilites rewritten by kaaaxcreators
 
 ## Language
-!"command"
+!"command" = 
         language = en
 
-!"command"de
+!"command"de =
         language = de
 
 ## Installation
