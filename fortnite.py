@@ -187,7 +187,6 @@ async def event_party_member_join(member: fortnitepy.PartyMember) -> None:
     print(f"[PartyBot] [{time()}] {member.display_name} joined the Party")
     
 
-
 @client.event
 async def event_friend_message(message: fortnitepy.FriendMessage) -> None:
     args = message.content.split()
@@ -195,8 +194,26 @@ async def event_friend_message(message: fortnitepy.FriendMessage) -> None:
     content = " ".join(split)
 
     print(f'[PartyBot] [{time()}] {message.author.display_name}: {message.content}')
-
+    #if {message.author.id} == "0272a4679d0847cba4d8137d7af47e2e":
     if "!skin" in args[0].lower():
+        try:
+            cosmetic = await BenBotAsync.get_cosmetic(
+                lang="en",
+                searchLang="en",
+                matchMethod="contains",
+                name=content,
+                backendType="AthenaCharacter"
+            )
+
+            await message.reply(f'Skin set to {cosmetic.id}.')
+            print(f"[PartyBot] [{time()}] Set skin to: {cosmetic.id}.")
+            await client.user.party.me.set_outfit(asset=cosmetic.id)
+
+        except BenBotAsync.exceptions.NotFound:
+            await message.reply(f"Couldn't find a skin with the name: {content}.")
+            print(f"[PartyBot] [{time()}] Couldn't find a skin with the name: {content}.")
+            
+    if "!skinde" in args[0].lower():
         try:
             cosmetic = await BenBotAsync.get_cosmetic(
                 lang="de",
@@ -212,9 +229,27 @@ async def event_friend_message(message: fortnitepy.FriendMessage) -> None:
 
         except BenBotAsync.exceptions.NotFound:
             await message.reply(f"Couldn't find a skin with the name: {content}.")
-            print(f"[PartyBot] [{time()}] Couldn't find a skin with the name: {content}.")
+            print(f"[PartyBot] [{time()}] Couldn't find a skin with the name: {content}.")        
 
     elif "!backpack" in args[0].lower():
+        try:
+            cosmetic = await BenBotAsync.get_cosmetic(
+                lang="en",
+                searchLang="en",
+                matchMethod="contains",
+                name=content,
+                backendType="AthenaBackpack"
+            )
+
+            await message.reply(f'Backpack set to {cosmetic.id}.')
+            print(f"[PartyBot] [{time()}] Set backpack to: {cosmetic.id}.")
+            await client.user.party.me.set_backpack(asset=cosmetic.id)
+
+        except BenBotAsync.exceptions.NotFound:
+            await message.reply(f"Couldn't find a backpack with the name: {content}.")
+            print(f"[PartyBot] [{time()}] Couldn't find a backpack with the name: {content}.")
+
+    elif "!backpackde" in args[0].lower():
         try:
             cosmetic = await BenBotAsync.get_cosmetic(
                 lang="de",
@@ -233,6 +268,25 @@ async def event_friend_message(message: fortnitepy.FriendMessage) -> None:
             print(f"[PartyBot] [{time()}] Couldn't find a backpack with the name: {content}.")
 
     elif "!emote" in args[0].lower():
+        try:
+            cosmetic = await BenBotAsync.get_cosmetic(
+                lang="en",
+                searchLang="en",
+                matchMethod="contains",
+                name=content,
+                backendType="AthenaDance"
+            )
+
+            await message.reply(f'Emote set to {cosmetic.id}.')
+            print(f"[PartyBot] [{time()}] Set emote to: {cosmetic.id}.")
+            await client.user.party.me.clear_emote()
+            await client.user.party.me.set_emote(asset=cosmetic.id)
+
+        except BenBotAsync.exceptions.NotFound:
+            await message.reply(f"Couldn't find an emote with the name: {content}.")
+            print(f"[PartyBot] [{time()}] Couldn't find an emote with the name: {content}.")
+
+    elif "!emotede" in args[0].lower():
         try:
             cosmetic = await BenBotAsync.get_cosmetic(
                 lang="de",
@@ -254,6 +308,23 @@ async def event_friend_message(message: fortnitepy.FriendMessage) -> None:
     elif "!pickaxe" in args[0].lower():
         try:
             cosmetic = await BenBotAsync.get_cosmetic(
+                lang="en",
+                searchLang="en",
+                matchMethod="contains",
+                name=content,
+                backendType="AthenaPickaxe"
+            )
+
+            await message.reply(f'Pickaxe set to {cosmetic.id}.')
+            print(f"[PartyBot] [{time()}] Set pickaxe to: {cosmetic.id}.")
+            await client.user.party.me.set_pickaxe(asset=cosmetic.id)
+
+        except BenBotAsync.exceptions.NotFound:
+            await message.reply(f"Couldn't find a pickaxe with the name: {content}.")
+            print(f"[PartyBot] [{time()}] Couldn't find a pickaxe with the name: {content}.")
+    elif "!pickaxede" in args[0].lower():
+        try:
+            cosmetic = await BenBotAsync.get_cosmetic(
                 lang="de",
                 searchLang="de",
                 matchMethod="contains",
@@ -272,8 +343,8 @@ async def event_friend_message(message: fortnitepy.FriendMessage) -> None:
     elif "!pet" in args[0].lower():
         try:
             cosmetic = await BenBotAsync.get_cosmetic(
-                lang="de",
-                searchLang="de",
+                lang="en",
+                searchLang="en",
                 matchMethod="contains",
                 name=content,
                 backendType="AthenaPet"
@@ -288,6 +359,23 @@ async def event_friend_message(message: fortnitepy.FriendMessage) -> None:
             print(f"[PartyBot] [{time()}] Couldn't find a pet with the name: {content}.")
 
     elif "!emoji" in args[0].lower():
+        try:
+            cosmetic = await BenBotAsync.get_cosmetic(
+                lang="en",
+                searchLang="en",
+                matchMethod="contains",
+                name=content,
+                backendType="AthenaEmoji"
+            )
+
+            await message.reply(f'Pet set to {cosmetic.id}.')
+            print(f"[PartyBot] [{time()}] Set pet to: {cosmetic.id}.")
+            await client.user.party.me.set_emoji(asset=cosmetic.id)
+
+        except BenBotAsync.exceptions.NotFound:
+            await message.reply(f"Couldn't find an emoji with the name: {content}.")
+            print(f"[PartyBot] [{time()}] Couldn't find an emoji with the name: {content}.")
+    elif "!emojide" in args[0].lower():
         try:
             cosmetic = await BenBotAsync.get_cosmetic(
                 lang="de",
@@ -305,11 +393,12 @@ async def event_friend_message(message: fortnitepy.FriendMessage) -> None:
             await message.reply(f"Couldn't find an emoji with the name: {content}.")
             print(f"[PartyBot] [{time()}] Couldn't find an emoji with the name: {content}.")
 
+
     elif "!contrail" in args[0].lower():
         try:
             cosmetic = await BenBotAsync.get_cosmetic(
-                lang="de",
-                searchLang="de",
+                lang="en",
+                searchLang="en",
                 matchMethod="contains",
                 name=content,
                 backendType="AthenaSkyDiveContrail"
@@ -511,8 +600,8 @@ async def event_friend_message(message: fortnitepy.FriendMessage) -> None:
         else:
             try:
                 cosmetic = await BenBotAsync.get_cosmetic(
-                    lang="de",
-                    searchLang="de",
+                    lang="en",
+                    searchLang="en",
                     matchMethod="contains",
                     name=content,
                     backendType="AthenaPickaxe"
