@@ -148,6 +148,16 @@ async def event_device_auth_generate(details: dict, email: str) -> None:
 @client.event
 async def event_ready() -> None:
     print(crayons.green(f'[PartyBot] [{time()}] Client ready as {client.user.display_name}.'))
+    await client.user.party.me.set_battlepass_info(
+        has_purchased=True,
+        level=data['bp_tier'],
+    )
+    await client.user.party.me.set_banner(
+        icon=client.user.party.me.banner[0],
+        color=client.user.party.me.banner[1],
+        season_level=data['level']
+    )
+    
 
     for pending in list(client.pending_friends.values()):
         if pending.direction == 'INBOUND':
@@ -161,6 +171,8 @@ async def event_ready() -> None:
 @client.event
 async def event_friend_request(request: fortnitepy.PendingFriend) -> None:
     print(f"[PartyBot] [{time()}] Received friend request from: {request.display_name}.")
+    
+    
 
     if data['friend_accept']:
         await request.accept()
