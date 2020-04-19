@@ -157,6 +157,8 @@ async def event_ready() -> None:
         color=client.user.party.me.banner[1],
         season_level=data['level']
     )
+    await client.user.party.me.set_outfit(asset="cid_028_athena_commando_f")
+    
     
 
     for pending in list(client.pending_friends.values()):
@@ -185,6 +187,15 @@ async def event_friend_request(request: fortnitepy.PendingFriend) -> None:
 @client.event
 async def event_party_member_join(member: fortnitepy.PartyMember) -> None:
     print(f"[PartyBot] [{time()}] {member.display_name} joined the Party")
+    """await client.user.party.me.set_battlepass_info(
+        has_purchased=True,
+        level=data['bp_tier'],
+    )
+    await client.user.party.me.set_banner(
+        icon=client.user.party.me.banner[0],
+        color=client.user.party.me.banner[1],
+        season_level=data['level']
+    )"""
     
 
 @client.event
