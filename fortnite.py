@@ -203,9 +203,9 @@ async def event_friend_message(message: fortnitepy.FriendMessage) -> None:
     args = message.content.split()
     split = args[1:]
     content = " ".join(split)
-
     print(f'[PartyBot] [{time()}] {message.author.display_name}: {message.content}')
-    #if {message.author.id} == "0272a4679d0847cba4d8137d7af47e2e":
+    #if message.author.id.display_name == "BerndinatorenLP":
+        
     if "!skin" in args[0].lower():
         try:
             cosmetic = await BenBotAsync.get_cosmetic(
@@ -453,7 +453,7 @@ async def event_friend_message(message: fortnitepy.FriendMessage) -> None:
         await client.user.party.me.set_emote(asset='eid_floss')
 
         await message.reply('Emote set to Floss!')
-
+        
     elif "!purpleportal" in args[0].lower():
         variants = client.user.party.me.create_variants(
             item='AthenaBackpack',
@@ -789,6 +789,9 @@ async def event_friend_message(message: fortnitepy.FriendMessage) -> None:
         await client.user.party.me.set_emote(asset=member.emote)
         await message.reply(f'Copied the loadout of {member.display_name}.')
 
+        await client.user.party.me.set_emote(asset=member.emote)
+        await message.reply(f'Copied the loadout of {member.display_name}.')
+
     elif "!hologram" in args[0].lower():
         await client.user.party.me.set_outfit(
             asset='CID_VIP_Athena_Commando_M_GalileoGondola_SG'
@@ -968,6 +971,16 @@ async def event_friend_message(message: fortnitepy.FriendMessage) -> None:
             else:
                 await message.reply(f'Failed to find user with the name: {content}.')
                 print(crayons.red(f"[PartyBot] [{time()}] [ERROR] Failed to find a user with the name {content}."))
+    elif "!back" in args[0].lower():
+
+        await client.user.party.me.clear_emote()
+        await client.user.party.me.set_backpack(asset='bid_004_blackknight')
+        await client.user.party.me.set_outfit('cid_035_athena_commando_m_medieval')
+        await client.user.party.me.set_emote(asset='eid_floss')
+
+        await message.reply('Emote set to Back Bling!')
+    """else:
+        print(crayons.red(f"[PartyBot] [{time()}] bla bla"))"""
 
 
 if (data['email'] and data['password']) and (data['email'] != 'email@email.com' and data['password'] != 'password1'):
