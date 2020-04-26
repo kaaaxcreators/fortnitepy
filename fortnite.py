@@ -948,7 +948,7 @@ async def event_friend_message(message: fortnitepy.FriendMessage) -> None:
                 await message.reply('Party not found, are you sure Fortnite is open?')
         else:
             await message.reply('Cannot join party as the friend is not found.')
-            
+
     elif "!reload" in args[0].lower():
         with open('config.json') as f:
             data = json.load(f)
