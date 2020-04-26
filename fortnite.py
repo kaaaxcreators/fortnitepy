@@ -446,6 +446,13 @@ async def event_friend_message(message: fortnitepy.FriendMessage) -> None:
         )
 
         await message.reply('Skin set to Pink Ghoul Trooper!')
+        
+    elif "!floss" in args[0].lower():
+
+        await client.user.party.me.clear_emote()
+        await client.user.party.me.set_emote(asset='eid_floss')
+
+        await message.reply('Emote set to Floss!')
 
     elif "!purpleportal" in args[0].lower():
         variants = client.user.party.me.create_variants(
