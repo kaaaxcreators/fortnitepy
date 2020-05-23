@@ -192,6 +192,16 @@ async def event_ready() -> None:
             else:
                 print(f"[PartyBot] [{time()}] Declined friend request from: {pending.display_name}.")
     await client.user.party.me.set_outfit(asset="cid_028_athena_commando_f")
+    await client.user.party.me.set_battlepass_info(
+            has_purchased=True,
+            level=args[1],
+    )
+    await client.user.party.me.set_banner(
+        icon=client.user.party.me.banner[0],
+        color=client.user.party.me.banner[1],
+        season_level=data['level']
+    )
+    print(crayons.green(f'[PartyBot] [{time()}] Set BattlePass, Banner and Skin.'))
 
 
 @client.event
