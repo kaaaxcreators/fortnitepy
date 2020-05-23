@@ -1,8 +1,34 @@
 # -*- coding: utf-8 -*-
 
+"""
+“Commons Clause” License Condition v1.0
+Copyright Oli 2019-2020
+
+The Software is provided to you by the Licensor under the
+License, as defined below, subject to the following condition.
+
+Without limiting other conditions in the License, the grant
+of rights under the License will not include, and the License
+does not grant to you, the right to Sell the Software.
+
+For purposes of the foregoing, “Sell” means practicing any or
+all of the rights granted to you under the License to provide
+to third parties, for a fee or other consideration (including
+without limitation fees for hosting or consulting/ support
+services related to the Software), a product or service whose
+value derives, entirely or substantially, from the functionality
+of the Software. Any license notice or attribution required by
+the License must also include this Commons Clause License
+Condition notice.
+
+Software: PartyBot
+
+License: Apache 2.0
+"""
+
 try:
     # System imports.
-    from typing import Tuple
+    from typing import Tuple, Any
 
     import asyncio
     import sys
@@ -13,13 +39,13 @@ try:
     import random
     import logging
     import uuid
-    import textwrap
 
     # Third party imports.
     import crayons
     import fortnitepy
     import BenBotAsync
     import aiohttp
+    import pypresence
     import psutil
 
 except ModuleNotFoundError as e:
@@ -49,7 +75,7 @@ def get_device_auth_details() -> dict:
     else:
         with open('device_auths.json', 'w+') as fp:
             json.dump({}, fp, sort_keys=False, indent=4)
-            
+
     return {}
 
 
@@ -84,7 +110,7 @@ async def set_vtid(vtid: str) -> Tuple[str, str, int]:
 
         response = await request.json()
 
-    #file_location = response['export_properties'][0]
+    file_location = response['export_properties'][0]
 
     skin_cid = file_location['cosmetic_item']
     variant_channel_tag = file_location['VariantChanelTag']['TagName']
@@ -98,18 +124,27 @@ async def set_vtid(vtid: str) -> Tuple[str, str, int]:
         lambda x: x.isnumeric(), variant_name_tag
     )))
 
-    if variant_type == 'ClothingColor':
-        return skin_cid, 'clothing_color', variant_int
-    else:
-        return skin_cid, variant_type, variant_int
+    return skin_cid, variant_type if variant_type != 'ClothingColor' else 'clothing_color', variant_int
 
 
-async def set_and_update_prop(schema_key: str, new_value: str) -> None:
+async def get_playlist(display_name: str) -> str:
+    async with aiohttp.ClientSession() as session:
+        request = await session.request(
+            method='GET',
+            url='http://scuffedapi.xyz/api/playlists/search',
+            params={
+                'displayName': display_name
+            })
+
+        response = await request.json()
+
+    return response['id'] if 'error' not in response else None
+
+
+async def set_and_update_prop(schema_key: str, new_value: Any) -> None:
     prop = {schema_key: client.user.party.me.meta.set_prop(schema_key, new_value)}
 
     await client.user.party.me.patch(updated=prop)
-
-
 with open('config.json') as f:
     data = json.load(f)
 if data['debug']:
