@@ -4,6 +4,14 @@
 [![Python Versions](https://img.shields.io/badge/python-3.6%20%7C%203.7%20%7C%203.8-blue)](https://www.python.org/downloads/release/python-360/) 
 
 A fortnite HTTP/XMPP bot coded in Python with party capabilites rewritten by kaaaxcreators
+<s>
+## Language
+!"command" = 
+        language en
+
+!"command"de =
+        language de
+</s>
 
 ## Installation
 PartyBot requires Python 3.6 or greater. If you need Python 3.6+, you can get it from here: [Python 3.6 Download](https://www.python.org/downloads/release/python-360/ "Python 3.6 Download").

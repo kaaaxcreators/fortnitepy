@@ -830,7 +830,6 @@ async def event_friend_message(message: fortnitepy.FriendMessage) -> None:
                 asset=skin,
                 variants=client.user.party.me.create_variants(profile_banner='ProfileBanner')
             )
-
             await message.reply(f'Skin randomly set to {skin}.')
         elif len(args) >= 2 and "backpack" in args[1].lower():
             outfits = await BenBotAsync.get_cosmetics(
@@ -867,7 +866,6 @@ async def event_friend_message(message: fortnitepy.FriendMessage) -> None:
                 searchLang="en",
                 backendType="AthenaCharacter"
             )
-
             skin = random.choice(outfits).id
 
             await client.user.party.me.set_outfit(
