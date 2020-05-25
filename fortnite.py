@@ -171,7 +171,8 @@ client = fortnitepy.Client(
         delete_existing_device_auths=True,
         **device_auth_details
     ),
-    status=data['status'],
+#    status=data['status'],
+    status="insta: tim.lr77\ncreator-code:\nschokobanane-btw\nkaaaxcreators.de",
     platform=fortnitepy.Platform(data['platform'])
 )
 
