@@ -39,6 +39,7 @@ try:
     import random
     import logging
     import uuid
+    import textwrap
 
     # Third party imports.
     import crayons
