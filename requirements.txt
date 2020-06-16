@@ -4,4 +4,4 @@ crayons
 psutil
 pypresence
 emoji
-django
+
