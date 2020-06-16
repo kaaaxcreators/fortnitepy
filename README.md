@@ -1,4 +1,4 @@
-# PartyBot 
+# PartyBot + HTTP Server
 
 [![Downloads](https://pepy.tech/badge/benbotasync)](https://pepy.tech/project/benbotasync)
 [![Python Versions](https://img.shields.io/badge/python-3.6%20%7C%203.7%20%7C%203.8-blue)](https://www.python.org/downloads/release/python-360/) ![Python application](https://github.com/kaaax0815/fnbot-kc/workflows/Python%20application/badge.svg)
@@ -38,3 +38,6 @@ PartyBot requires Python 3.6 or greater. If you need Python 3.6+, you can get it
 
 ## License
 By downloading this, you agree to the Commons Clause license and that you're not allowed to sell this repository or any code from this repository. For more info see https://commonsclause.com/.
+
+## Server
+[Click here to go to the Website(https://fnbot-kc.herokuapp.com)
