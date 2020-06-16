@@ -4,6 +4,8 @@
 [![Python Versions](https://img.shields.io/badge/python-3.6%20%7C%203.7%20%7C%203.8-blue)](https://www.python.org/downloads/release/python-360/) ![Python application](https://github.com/kaaax0815/fnbot-kc/workflows/Python%20application/badge.svg)
 
 A fortnite HTTP/XMPP bot coded in Python with party capabilites rewritten by kaaaxcreators
+## WARNING
+This uses the old versions of fortnitepy and BenBotAsync. the versions are mentioned in the "requirements.txt" file
 <s>
 ## Language
 !"command" = 
