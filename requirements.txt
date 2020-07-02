@@ -1,7 +1,5 @@
-fortnitepy==1.7.1
-BenBotAsync==2.3.0
+fortnitepy
+BenBotAsync
 crayons
-psutil
 pypresence
-emoji
-
+psutil
