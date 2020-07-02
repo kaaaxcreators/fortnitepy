@@ -1,5 +1,5 @@
-fortnitepy
-BenBotAsync
+fortnitepy==2.1.1
+BenBotAsync==2.4.0
 crayons
 pypresence
 psutil
