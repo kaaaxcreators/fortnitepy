@@ -275,7 +275,7 @@ async def event_friend_request(request: fortnitepy.PendingFriend) -> None:
 
 @client.event
 async def event_party_member_join(member: fortnitepy.PartyMember) -> None:
-    await BenBotAsync.set_default_loadout(client, data, member)
+    await ctx.send(f"Creator-Code: schokobanane-btw")
 
 
 @client.event
