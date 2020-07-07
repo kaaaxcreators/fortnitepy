@@ -256,12 +256,6 @@ async def event_ready() -> None:
 
 
 @client.event
-async def event_party_invite(invite: fortnitepy.ReceivedPartyInvitation) -> None:
-    await invite.accept()
-    print(f'[PartyBot] [{time()}] Accepted party invite from {invite.sender.display_name}.')
-
-
-@client.event
 async def event_friend_request(request: fortnitepy.PendingFriend) -> None:
     print(f"[PartyBot] [{time()}] Received friend request from: {request.display_name}.")
 
@@ -275,7 +269,7 @@ async def event_friend_request(request: fortnitepy.PendingFriend) -> None:
 
 @client.event
 async def event_party_member_join(member: fortnitepy.PartyMember) -> None:
-    await ctx.send(f"Creator-Code: schokobanane-btw")
+    await client.party.send("Support-A-Creator-Code: "schokobanane-btw"!")
     await client.party.me.set_battlepass_info(
         has_purchased=True,
         level=105,
@@ -767,13 +761,6 @@ async def level(ctx: fortnitepy.ext.commands.Context, banner_level: int) -> None
 
 @commands.dm_only()
 @client.command()
-async def echo(ctx: fortnitepy.ext.commands.Context, *, content: str) -> None:
-    await client.party.send(content)
-    await ctx.send('Sent message to party chat.')
-
-
-@commands.dm_only()
-@client.command()
 async def status(ctx: fortnitepy.ext.commands.Context, *, content: str) -> None:
     await client.set_status(content)
 
@@ -794,48 +781,6 @@ async def leave(ctx: fortnitepy.ext.commands.Context) -> None:
 
 @commands.dm_only()
 @client.command()
-async def kick(ctx: fortnitepy.ext.commands.Context, *, epic_username: str) -> None:
-    user = await client.fetch_profile(epic_username)
-    member = client.party.members.get(user.id)
-
-    if member is None:
-        await ctx.send("Failed to find that user, are you sure they're in the party?")
-    else:
-        try:
-            await member.kick()
-            await ctx.send(f"Kicked user: {member.display_name}.")
-            print(f"[PartyBot] [{time()}] Kicked user: {member.display_name}")
-        except fortnitepy.errors.Forbidden:
-            await ctx.send(f"Failed to kick {member.display_name}, as I'm not party leader.")
-            print(crayons.red(f"[PartyBot] [{time()}] [ERROR] "
-                              "Failed to kick member as I don't have the required permissions."))
-
-
-@commands.dm_only()
-@client.command(aliases=['unhide'])
-async def promote(ctx: fortnitepy.ext.commands.Context, *, epic_username: Union[str, None] = None) -> None:
-    if epic_username is None:
-        user = await client.fetch_profile(ctx.author.display_name)
-        member = client.party.members.get(user.id)
-    else:
-        user = await client.fetch_profile(epic_username)
-        member = client.party.members.get(user.id)
-
-    if member is None:
-        await ctx.send("Failed to find that user, are you sure they're in the party?")
-    else:
-        try:
-            await member.promote()
-            await ctx.send(f"Promoted user: {member.display_name}.")
-            print(f"[PartyBot] [{time()}] Promoted user: {member.display_name}")
-        except fortnitepy.errors.Forbidden:
-            await ctx.send(f"Failed topromote {member.display_name}, as I'm not party leader.")
-            print(crayons.red(f"[PartyBot] [{time()}] [ERROR] "
-                              "Failed to kick member as I don't have the required permissions."))
-
-
-@commands.dm_only()
-@client.command()
 async def playlist_id(ctx: fortnitepy.ext.commands.Context, playlist_: str) -> None:
     try:
         await client.party.set_playlist(playlist=playlist_)
@@ -845,29 +790,6 @@ async def playlist_id(ctx: fortnitepy.ext.commands.Context, playlist_: str) -> N
         print(crayons.red(f"[PartyBot] [{time()}] [ERROR] "
                           "Failed to set gamemode as I don't have the required permissions."))
 
-
-@commands.dm_only()
-@client.command()
-async def privacy(ctx: fortnitepy.ext.commands.Context, privacy_type: str) -> None:
-    try:
-        if privacy_type.lower() == 'public':
-            await client.party.set_privacy(fortnitepy.PartyPrivacy.PUBLIC)
-        elif privacy_type.lower() == 'private':
-            await client.party.set_privacy(fortnitepy.PartyPrivacy.PRIVATE)
-        elif privacy_type.lower() == 'friends':
-            await client.party.set_privacy(fortnitepy.PartyPrivacy.FRIENDS)
-        elif privacy_type.lower() == 'friends_allow_friends_of_friends':
-            await client.party.set_privacy(fortnitepy.PartyPrivacy.FRIENDS_ALLOW_FRIENDS_OF_FRIENDS)
-        elif privacy_type.lower() == 'private_allow_friends_of_friends':
-            await client.party.set_privacy(fortnitepy.PartyPrivacy.PRIVATE_ALLOW_FRIENDS_OF_FRIENDS)
-
-        await ctx.send(f'Party privacy set to {client.party.privacy}.')
-        print(f'[PartyBot] [{time()}] Party privacy set to {client.party.privacy}.')
-
-    except fortnitepy.errors.Forbidden:
-        await ctx.send(f"Failed to set party privacy to {privacy_type}, as I'm not party leader.")
-        print(crayons.red(f"[PartyBot] [{time()}] [ERROR] "
-                          "Failed to set party privacy as I don't have the required permissions."))
 
 
 @commands.dm_only()
@@ -1204,32 +1126,6 @@ async def lobby(ctx: fortnitepy.ext.commands.Context) -> None:
     await client.party.me.clear_in_match()
 
     await ctx.send('Set state to the pre-game lobby.')
-
-
-@commands.dm_only()
-@client.command()
-async def join(ctx: fortnitepy.ext.commands.Context, *, epic_username: Union[str, None] = None) -> None:
-    if epic_username is None:
-        epic_friend = client.get_friend(ctx.author.id)
-    else:
-        user = await client.fetch_profile(epic_username)
-
-        if user is not None:
-            epic_friend = client.get_friend(user.id)
-        else:
-            epic_friend = None
-            await ctx.send(f'Failed to find user with the name: {epic_username}.')
-
-    if isinstance(epic_friend, fortnitepy.Friend):
-        try:
-            await epic_friend.join_party()
-            await ctx.send(f'Joined the party of {epic_friend.display_name}.')
-        except fortnitepy.errors.Forbidden:
-            await ctx.send('Failed to join party since it is private.')
-        except fortnitepy.errors.PartyError:
-            await ctx.send('Party not found, are you sure Fortnite is open?')
-    else:
-        await ctx.send('Cannot join party as the friend is not found.')
 
 
 @commands.dm_only()
