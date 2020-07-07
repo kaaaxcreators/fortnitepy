@@ -52,7 +52,7 @@ except ModuleNotFoundError as e:
           'the support server.')
     sys.exit()
 
-# Imports uvloop and uses it if installed (Unix only).
+# Imports uvloop and uses it if installed (Unix only)
 try:
     import uvloop
 except ImportError:
