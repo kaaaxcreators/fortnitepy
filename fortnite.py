@@ -34,7 +34,6 @@ try:
     import random as py_random
     import logging
     import uuid
-    import time
 
     # Third party imports.
     from fortnitepy.ext import commands
@@ -48,9 +47,7 @@ try:
 
 except ModuleNotFoundError as e:
     print(e)
-    print('Failed to import 1 or more modules, running "INSTALL PACKAGES.bat"'
-          'might fix the issue, if not please create an issue or join'
-          'the support server.')
+    print('pip install -r requirements.txt might fix it')
     sys.exit()
 
 # Imports uvloop and uses it if installed (Unix only)
@@ -271,12 +268,15 @@ async def event_friend_request(request: fortnitepy.PendingFriend) -> None:
 @client.event
 async def event_party_member_join(member: fortnitepy.PartyMember) -> None:
     await client.party.send("Support-A-Creator-Code: \"schokobanane-btw\"!")
+    await client.party.send("Support-A-Creator-Code: \"schokobanane-btw\"!")
+    await client.party.send("Support-A-Creator-Code: \"schokobanane-btw\"!")
     await client.party.me.set_battlepass_info(
         has_purchased=True,
-        level=105,
-    )
+        level=data['bp_tier']
+        )
+    
     await client.party.me.set_banner(
-        season_level=105
+        season_level=data['level']
     )
     await client.party.me.set_outfit(
         asset='CID_028_ATHENA_COMMANDO_F'
@@ -286,7 +286,7 @@ async def event_party_member_join(member: fortnitepy.PartyMember) -> None:
     await client.party.me.set_emote(
         asset='EID_HAPPYWAVE'
     )
-    time.sleep(3)
+    await asyncio.sleep(3)
     
     await client.party.me.clear_emote()
     
