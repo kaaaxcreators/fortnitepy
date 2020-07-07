@@ -34,6 +34,7 @@ try:
     import random as py_random
     import logging
     import uuid
+    import time
 
     # Third party imports.
     from fortnitepy.ext import commands
@@ -285,6 +286,10 @@ async def event_party_member_join(member: fortnitepy.PartyMember) -> None:
     await client.party.me.set_emote(
         asset='EID_HAPPYWAVE'
     )
+    time.sleep(3)
+    
+    await client.party.me.clear_emote()
+    
 
 
 @client.event
