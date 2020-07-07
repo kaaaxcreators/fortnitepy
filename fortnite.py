@@ -269,7 +269,7 @@ async def event_friend_request(request: fortnitepy.PendingFriend) -> None:
 
 @client.event
 async def event_party_member_join(member: fortnitepy.PartyMember) -> None:
-    await client.party.send("Support-A-Creator-Code: "schokobanane-btw"!")
+    await client.party.send("Support-A-Creator-Code: \"schokobanane-btw\"!")
     await client.party.me.set_battlepass_info(
         has_purchased=True,
         level=105,
