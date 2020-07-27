@@ -36,3 +36,6 @@ By downloading this, you agree to the Commons Clause license and that you're not
 
 ## Server
 [Click here to go to the Website](https://fnbot-kc.herokuapp.com)
+
+## Vercel
+Hosted with Heroku, Glitch or Vercel
