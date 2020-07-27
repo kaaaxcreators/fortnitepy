@@ -7,7 +7,7 @@ A fortnite HTTP/XMPP bot coded in Python with party capabilites rewritten by kaa
 ## WARNING
 This uses the older versions of fortnitepy and BenBotAsync. the versions are mentioned in the "requirements.txt" file
 May work with the new ones too
-<s>
+
 
 ## Installation
 PartyBot requires Python 3.6 or greater. If you need Python 3.6+, you can get it from here: [Python 3.6 Download](https://www.python.org/downloads/release/python-360/ "Python 3.6 Download").
@@ -34,5 +34,5 @@ PartyBot requires Python 3.6 or greater. If you need Python 3.6+, you can get it
 ## License
 By downloading this, you agree to the Commons Clause license and that you're not allowed to sell this repository or any code from this repository. For more info see https://commonsclause.com/.
 
-## Server
-[Click here to go to the Website](https://fnbot-kc.herokuapp.com)
+## Hosting
+Hosted with Heroku, Glitch or Vercel
