@@ -242,7 +242,8 @@ async def event_ready() -> None:
             try:
                 epic_friend = await pending.accept() if data["friend_accept"] else await pending.decline()
                 if isinstance(epic_friend, fortnitepy.Friend):
-                    print(f"[PartyBot] [{time()}] Accepted friend request from: {epic_friend.display_name}.")
+                    print(f"[PartyBot] [{time()}] Accepted friend request from: {epic_friend.display_name}.")                    
+                    
                 else:
                     print(f"[PartyBot] [{time()}] Declined friend request from: {pending.display_name}.")
             except fortnitepy.HTTPException as epic_error:
@@ -256,7 +257,6 @@ async def event_ready() -> None:
 @client.event
 async def event_friend_request(request: fortnitepy.PendingFriend) -> None:
     print(f"[PartyBot] [{time()}] Received friend request from: {request.display_name}.")
-
     if data['friend_accept']:
         await request.accept()
         print(f"[PartyBot] [{time()}] Accepted friend request from: {request.display_name}.")
@@ -284,13 +284,9 @@ async def event_party_member_join(member: fortnitepy.PartyMember) -> None:
     await client.party.me.clear_emote()
 
     await client.party.me.set_emote(
-        asset='EID_HAPPYWAVE'
+        asset='EID_WAVE'
     )
-    await asyncio.sleep(3)
     
-    await client.party.me.clear_emote()
-    
-
 
 @client.event
 async def event_friend_message(message: fortnitepy.FriendMessage) -> None:
