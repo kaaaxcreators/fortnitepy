@@ -242,7 +242,9 @@ async def event_ready() -> None:
             try:
                 epic_friend = await pending.accept() if data["friend_accept"] else await pending.decline()
                 if isinstance(epic_friend, fortnitepy.Friend):
-                    print(f"[PartyBot] [{time()}] Accepted friend request from: {epic_friend.display_name}.")                    
+                    print(f"[PartyBot] [{time()}] Accepted friend request from: {epic_friend.display_name}.") 
+                    friend = await pending.accept()
+                    await friend.invite()					
                     
                 else:
                     print(f"[PartyBot] [{time()}] Declined friend request from: {pending.display_name}.")
@@ -260,6 +262,8 @@ async def event_friend_request(request: fortnitepy.PendingFriend) -> None:
     if data['friend_accept']:
         await request.accept()
         print(f"[PartyBot] [{time()}] Accepted friend request from: {request.display_name}.")
+        friend = await pending.accept()
+        await friend.invite()
     else:
         await request.decline()
         print(f"[PartyBot] [{time()}] Declined friend request from: {request.display_name}.")
