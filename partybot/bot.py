@@ -69,6 +69,7 @@ class PartyBot(commands.Bot):
                 secret=account_device_auths.secret
             ),
             status=self.settings.status,
+            ad=self.settings.ad,
             platform=fortnitepy.Platform(self.settings.platform),
             avatar=fortnitepy.Avatar(
                 asset=self.settings.cid,
@@ -99,20 +100,6 @@ class PartyBot(commands.Bot):
     async def event_ready(self) -> None:
         print(crayons.green(self.message % f'Client ready as {self.user.display_name}.'))
 
-        # discord_exists = await self.loop.run_in_executor(None, HelperFunctions.check_if_process_running, 'Discord')
-
-        # if discord_exists:
-        #     asyncio.get_event_loop().create_task(self.start_discord_rich_presence())
-
-        # NOTE: Ignore this commented out code below, I use it to generate the "docs".
-        # command_names = []
-        #
-        # for commands in self.commands:
-        #     command_names.append(commands.name)
-        #
-        # for command in command_names:
-        #     print(command)
-
         for pending in self.incoming_pending_friends:
             try:
                 epic_friend = await pending.accept() if self.settings.friend_accept else await pending.decline()
@@ -126,10 +113,6 @@ class PartyBot(commands.Bot):
 
                 await asyncio.sleep(int(epic_error.message_vars[0] + 1))
                 await pending.accept() if self.settings.friend_accept else await pending.decline()
-
-    async def event_party_invite(self, invite: fortnitepy.ReceivedPartyInvitation) -> None:
-        await invite.accept()
-        print(self.message % f'Accepted party invite from {invite.sender.display_name}.')
 
     async def event_friend_request(self, request: fortnitepy.IncomingPendingFriend) -> None:
         if isinstance(request, fortnitepy.OutgoingPendingFriend):

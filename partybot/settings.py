@@ -36,6 +36,7 @@ import aiofiles
 class BotSettings:
     def __init__(self,
                  email: str = "",
+                 ad: str = "",
                  password: str = "",
                  cid: str = "",
                  bid: str = "",
@@ -64,6 +65,7 @@ class BotSettings:
         self.platform = platform
         self.debug = debug
         self.friend_accept = friend_accept
+        self.ad = ad
 
     async def load_settings_from_file(self, filename: str) -> None:
         async with aiofiles.open(filename, mode='r+') as f:
@@ -85,6 +87,7 @@ class BotSettings:
         self.platform = data.get('platform', self.platform)
         self.debug = data.get('debug', self.debug)
         self.friend_accept = data.get('friend_accept', self.friend_accept)
+        self.ad = data.get('ad', self.ad)
 
     def to_dict(self) -> dict:
         return {
@@ -101,7 +104,8 @@ class BotSettings:
             "status": self.status,
             "platform": self.platform,
             "debug": self.debug,
-            "friend_accept": self.friend_accept
+            "friend_accept": self.friend_accept,
+            "ad": self.ad
         }
 
 

@@ -78,6 +78,13 @@ async def set_default_loadout(client: fortnitepy.Client, config: dict, member: f
 
     party_update_meta = client.party  # Saves direct route to the party_update_meta object.
 
+    welcome_message = config['ad']
+
+    # Sends unique iOS kairos token in order for request to be accepted via GraphQL.
+    await party_update_meta.send(
+        welcome_message.replace('{DISPLAY_NAME}', member.display_name)
+    )
+
     if (party_update_meta.id == client.party.id
             and client.default_party_member_config.cls is not fortnitepy.party.JustChattingClientPartyMember):
         await party_update_meta.me.edit_and_keep(  # Sets default loadout.
@@ -112,7 +119,6 @@ async def set_default_loadout(client: fortnitepy.Client, config: dict, member: f
             and client.default_party_member_config.cls is not fortnitepy.party.JustChattingClientPartyMember):
         await party_update_meta.me.clear_emote()  # Clears emote to allow the next emote to play.
         await party_update_meta.me.set_emote(asset=config['eid'])  # Plays the emote from config.
-
         if client.user.display_name != member.display_name:  # Welcomes the member who just joined.
             print(f"[PartyBot] [{time()}] {member.display_name} has joined the lobby.")
 

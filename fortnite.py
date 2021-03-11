@@ -110,6 +110,11 @@ async def main() -> None:
 
     await client.http.close()
 
+# Hiding Flask logs
+log = logging.getLogger('werkzeug')
+log.setLevel(logging.ERROR)
+cli = sys.modules['flask.cli']
+cli.show_server_banner = lambda *x: None
 app = Flask("")
 @app.route("/")
 def index():
@@ -120,6 +125,6 @@ loop = asyncio.get_event_loop()
 try:
     loop.run_until_complete(main())
 except KeyboardInterrupt:
-    print("Exiting...")
+    print("Pls force quit the Program")
     stop_threads = True
     loop.close()

@@ -1,0 +1,5 @@
+run = "py fortnite.py"
+language="python3"
+
+[packager]
+ignoredPaths=[".git", "BenBotAsyncNoAds"]
