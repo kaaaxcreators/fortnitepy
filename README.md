@@ -22,7 +22,7 @@ Install Python 3.7, you can get it from here: [Python 3.7.0 Download](https://ww
 
 If you use Caprover or Docker there is a Dockerfile and captain-definition which fine.
 
-I didnt test repl.it compatibility with the custom module, but because of the Express Server it is easy to setup e.g. UptimeRobot to keep the Repl alive and online 24/7.
+Hosting with [Repl.it](https://repl.it/) works fine! You just have to use a cronjob or Uptimerobot and ping it every 15 minutes to keep it alive
 
 ## Ads
 

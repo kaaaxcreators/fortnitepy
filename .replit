@@ -1,4 +1,4 @@
-run = "pip3 install -r requirements-linux.txt && python3 fortnite.py"
+run = "python3 fortnite.py"
 language="python3"
 
 [packager]
