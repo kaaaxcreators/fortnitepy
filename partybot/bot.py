@@ -44,7 +44,6 @@ import fortnitepy
 import crayons
 import BenBotAsyncNoAds as BenBotAsync
 import FortniteAPIAsync
-import pypresence
 
 
 class PartyBot(commands.Bot):
