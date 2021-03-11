@@ -1,0 +1,14 @@
+[tool.poetry]
+name = "fortnitepy-bot"
+version = "0.0.1"
+description = "fortnitepy-bot"
+authors = ["kaaaxcreators"]
+
+[tool.poetry.dependencies]
+python = "3.7"
+fortnitepy = "3.3.5"
+crayons = "0.4.0"
+FortniteAPIAsync = "0.1.6"
+aiofiles = "0.6.0"
+Flask = "1.1.2"
+benbotasyncnoads = {path = "BenBotAsyncNoAds"}
