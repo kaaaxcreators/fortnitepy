@@ -1,1 +1,1 @@
-web: python fortnite.py
+web: pip3 install -r requirements-linux.txt && python3 fortnite.py
