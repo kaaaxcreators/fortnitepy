@@ -31,11 +31,6 @@ PartyBot requires Python 3.6.1 or greater. If you want Python 3.7 (the recommend
 
 3. Launch the fortnite.py file and enjoy.
 
-4. ***This step is optional and WILL NOT work on Windows.*** <br>The bot will automatically use uvloop (fastest event loop) if it's installed. To install uvloop, enter this into terminal:
-
-    ```
-    pip install -U uvloop
-    ```
 
 ## License
 By downloading this, you agree to the Commons Clause license and that you're not allowed to sell this repository or any code from this repository. For more info see https://commonsclause.com/.
