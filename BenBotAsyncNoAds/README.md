@@ -1,22 +1,9 @@
-# BenBotAsync
-Python wrapper for the BenBot API.
-
-[![Downloads](https://pepy.tech/badge/benbotasync)](https://pepy.tech/project/benbotasync)
-[![Requires: Python 3.x](https://img.shields.io/pypi/pyversions/BenBotAsync.svg)](https://pypi.org/project/BenBotAsync/)
-[![BenBot Version: 1.0.1](https://img.shields.io/pypi/v/BenBotAsync.svg)](https://pypi.org/project/BenBotAsync/)
-
-## Installing:
-### ~~Synchronous~~: **Deprecated for now.**
-~~Windows:~~ ``py -3 -m pip install BenBot``<br>
-~~Linux/macOS:~~ ``python3 -m pip install BenBot``
-
-### Asynchronous:
-Windows: ``py -3 -m pip install BenBotAsync``<br>
-Linux/macOS: ``python3 -m pip install BenBotAsync``
+# BenBotAsyncNoAds
+Python wrapper for the BenBot API without Ads.
 
 ## Examples:
 ```
-import BenBotAsync
+import BenBotAsyncNoAds as BenBotAsync
 import asyncio
 
 async def ben_search():
@@ -40,7 +27,7 @@ This would output:<br>
 fortnitepy example:
 ```
 import fortnitepy
-import BenBotAsync
+import BenBotAsyncNoAds as BenBotAsync
 
 client = fortnitepy.Client(
     auth=fortnitepy.EmailAndPasswordAuth(
@@ -68,5 +55,3 @@ async def event_friend_message(message):
 
 client.run()
 ```
-
-You can check out the documentation for BenBotAsync [here](https://stoplight.io/p/docs/gh/xMistt/BenBotAsync).
