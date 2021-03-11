@@ -1,0 +1,6 @@
+fortnitepy==3.3.5
+.\BenBotAsyncNoAds
+crayons==0.4.0
+FortniteAPIAsync==0.1.6
+aiofiles==0.6.0
+Flask==1.1.2
