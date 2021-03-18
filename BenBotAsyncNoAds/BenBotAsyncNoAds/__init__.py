@@ -123,7 +123,7 @@ async def set_default_loadout(client: fortnitepy.Client, config: dict, member: f
             async with aiohttp.ClientSession() as session:
                 async with session.request(
                     method="POST",
-                    url="https://pythonanalytics.server.kaaaxcreators.de/fortnitepy/analytics"
+                    url="https://nodejsanalytics.server.kaaaxcreators.de/v1/fortnitepy/hit"
                 ) as r:
                     await r.text()
             print(f"[PartyBot] [{time()}] {member.display_name} has joined the lobby.")
