@@ -99,6 +99,9 @@ class PartyBot(commands.Bot):
 
     async def event_ready(self) -> None:
         print(crayons.green(self.message % f'Client ready as {self.user.display_name}.'))
+        
+        if self.party.me.leader:
+            await self.party.set_privacy(fortnitepy.PartyPrivacy.PUBLIC)
 
         for pending in self.incoming_pending_friends:
             try:
@@ -113,6 +116,9 @@ class PartyBot(commands.Bot):
 
                 await asyncio.sleep(int(epic_error.message_vars[0] + 1))
                 await pending.accept() if self.settings.friend_accept else await pending.decline()
+
+    async def event_party_invite(self, invite: fortnitepy.ReceivedPartyInvitation) -> None:
+        print(self.message % f'Rejected party invite from {invite.sender.display_name}.')
 
     async def event_friend_request(self, request: fortnitepy.IncomingPendingFriend) -> None:
         if isinstance(request, fortnitepy.OutgoingPendingFriend):
@@ -150,5 +156,5 @@ class PartyBot(commands.Bot):
             pass
         else:
             await ctx.send(f'When trying to process !{ctx.command.name}, an error occured: "{error}"\n'
-                           f'Please report this on Discord or GitHub.')
+                           f'Please report this on GitHub.')
             raise error

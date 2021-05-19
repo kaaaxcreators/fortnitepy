@@ -28,14 +28,15 @@ License: Apache 2.0
 
 # System imports.
 from typing import Optional, Union
-import os, sys
+
+import os
+import sys
 
 # Third party imports.
 from fortnitepy.ext import commands
 
 import fortnitepy
 import aiohttp
-import crayons
 
 
 class ClientCommands(commands.Cog):
@@ -80,7 +81,7 @@ class ClientCommands(commands.Cog):
     async def clean(self, ctx: fortnitepy.ext.commands.Context) -> None:
         os.system('cls' if 'win' in sys.platform else 'clear')
 
-        print(crayons.cyan(self.bot.message % f'PartyBot made by kaaaxcreators.'))
+        print(crayons.cyan(self.bot.message % f'PartyBot made by kaaaxcreators'))
 
         await ctx.send('Command prompt/terminal cleared.')
         print(self.bot.message % f'Command prompt/terminal cleared.')
@@ -111,7 +112,7 @@ class ClientCommands(commands.Cog):
         async with aiohttp.ClientSession() as session:
             async with session.request(
                 method="GET",
-                url="https://api.github.com/repos/xMistt/fortnitepy-bot/commits/master"
+                url="https://api.github.com/repos/kaaaxcreators/fortnitepy/commits/master"
             ) as request:
                 data = await request.json()
 
