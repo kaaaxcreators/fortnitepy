@@ -36,7 +36,6 @@ import aiofiles
 class BotSettings:
     def __init__(self,
                  email: str = "",
-                 ad: str = "",
                  password: str = "",
                  cid: str = "",
                  bid: str = "",
@@ -49,7 +48,8 @@ class BotSettings:
                  status: str = "",
                  platform: str = "",
                  debug: bool = False,
-                 friend_accept: bool = True
+                 friend_accept: bool = True,
+                 ad: str = "",
                  ) -> None:
         self.email = email
         self.password = password
@@ -107,5 +107,4 @@ class BotSettings:
             "friend_accept": self.friend_accept,
             "ad": self.ad
         }
-
 

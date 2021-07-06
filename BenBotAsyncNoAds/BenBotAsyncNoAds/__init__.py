@@ -25,7 +25,7 @@ from typing import Tuple, Union, Any
 
 from .enums import *
 from .cosmetics import BRCosmetic
-from .exceptions import InvalidParameters, NotFound
+from .exceptions import InvalidParameters, NotFound, APIServerDown
 from .api import BenBot
 
 import aiohttp
@@ -39,38 +39,10 @@ import json
 import datetime
 
 __name__ = 'BenBotAsyncNoAds'
-__version__ = '2.6.0'
+__version__ = '3.0.1'
 __author__ = 'kaaaxcreators'
 
-try:
-    import fortnitepy
-
-    if fortnitepy.__version__ == '1.7.1':
-        raise ValueError('Please update your fortnitepy to 2.0.0+.')
-except ImportError:
-    pass
-
-BEN_BOT_BASE = 'https://benbotfn.tk/api/v1'
-
-# # IOS_TOKEN_TEMPLATE = (b'SnJ5cGJ6ciAlZiwgVid6IG4geWJvb2wgb2JnIHpucXIgb2wga1p2ZmdnL3p2Zmdr'
-# #                       b'Ynl2ISBTYmUgdXJ5YywgeXZmZyBicyBwYnp6bmFxZiBiZSB2cyBsYmggam5hYW4g'
-# #                       b'dWJmZyBsYmhlIGJqYSBvYmcsIHdidmEgZ3VyIHF2ZnBiZXE6IHVnZ2NmOi8vcXZm'
-# #                       b'cGJlcS50dC84dXJORUVPLg==')
-#
-# IOS_TOKEN_TEMPLATE = (b'SGZyIFBicXIgVW52eXJsLUdGSCAjbnEhXGFKcnlwYnpyICVmLCB2cyBsYmggam5hZyBsYm'
-#                       b'hlIGJqYSBvYmcgYmUgdXJ5Yywgd2J2YTogdWdnY2Y6Ly9xdmZwYmVxLnR0Lzh1ck5FRU8==')
-
-
-def time() -> str:
-    return datetime.datetime.now().strftime('%H:%M:%S')
-
-
-# Credit to Terbau for this function.
-async def json_or_text(response: aiohttp.ClientResponse) -> Union[str, dict]:
-    text = await response.text(encoding='utf-8')
-    if 'application/json' in response.headers.get('content-type', ''):
-        return json.loads(text)
-    return text
+BEN_BOT_BASE = 'https://benbot.app/api/v1'
 
 
 async def set_default_loadout(client: fortnitepy.Client, config: dict, member: fortnitepy.PartyMember) -> None:
@@ -119,8 +91,17 @@ async def set_default_loadout(client: fortnitepy.Client, config: dict, member: f
             and client.default_party_member_config.cls is not fortnitepy.party.JustChattingClientPartyMember):
         await party_update_meta.me.clear_emote()  # Clears emote to allow the next emote to play.
         await party_update_meta.me.set_emote(asset=config['eid'])  # Plays the emote from config.
+
         if client.user.display_name != member.display_name:  # Welcomes the member who just joined.
-            print(f"[PartyBot] [{time()}] {member.display_name} has joined the lobby.")
+            print(f"[PartyBot] [{datetime.datetime.now().strftime('%H:%M:%S')}] "
+                  f"{member.display_name} has joined the lobby.")
+
+
+async def json_or_text(response: aiohttp.ClientResponse) -> Union[str, dict]:
+    text = await response.text(encoding='utf-8')
+    if 'application/json' in response.headers.get('content-type', ''):
+        return json.loads(text)
+    return text
 
 
 async def get_cosmetic(**params: Any) -> BRCosmetic:
@@ -180,9 +161,10 @@ async def get_cosmetic(**params: Any) -> BRCosmetic:
 
             if 'At least one search parameter is required' in str(data):
                 raise InvalidParameters('At least one valid search parameter is required.')
-
-            if 'Could not find any cosmetic matching parameters' in str(data):
+            elif 'Could not find any cosmetic matching parameters' in str(data):
                 raise NotFound('Could not find any cosmetic matching parameters.')
+            elif 'Api is currently updating' in str(data):
+                raise APIServerDown(data['error'])
 
             return BRCosmetic(data)
 
@@ -244,9 +226,10 @@ async def get_cosmetics(**params: Any) -> list:
 
             if 'At least one search parameter is required' in str(data):
                 raise InvalidParameters('At least one valid search parameter is required.')
-
-            if 'Could not find any cosmetic matching parameters' in str(data):
+            elif 'Could not find any cosmetic matching parameters' in str(data):
                 raise NotFound('Could not find any cosmetic matching parameters.')
+            elif 'Api is currently updating' in str(data):
+                raise APIServerDown(data['error'])
 
             return [BRCosmetic(cosmetic) for cosmetic in data]
 
@@ -278,5 +261,7 @@ async def get_cosmetic_from_id(cosmetic_id: str) -> BRCosmetic:
 
             if 'Invalid ID' in str(data):
                 raise NotFound('Invalid ID.')
+            elif 'Api is currently updating' in str(data):
+                raise APIServerDown(data['error'])
 
             return BRCosmetic(data)

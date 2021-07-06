@@ -37,6 +37,7 @@ from fortnitepy.ext import commands
 
 import fortnitepy
 import aiohttp
+import crayons
 
 
 class ClientCommands(commands.Cog):
@@ -54,22 +55,6 @@ class ClientCommands(commands.Cog):
 
         await ctx.send(f'Status set to {content}')
         print(self.bot.message % f'Status set to {content}.')
-
-    @commands.dm_only()
-    @commands.command(
-        description="[Client] Sets the clients kairos/PartyHub avatar.",
-        help="Sets the clients kairos/PartyHub avatar.\n"
-             "Example: !avatar stw_soldier_f"
-    )
-    async def avatar(self, ctx: fortnitepy.ext.commands.Context, kairos_cid: str) -> None:
-        kairos_avatar = fortnitepy.Avatar(
-            asset=kairos_cid
-        )
-
-        self.bot.set_avatar(kairos_avatar)
-
-        await ctx.send(f'Kairos avatar set to {kairos_cid}.')
-        print(self.bot.message % f'Kairos avatar set to {kairos_cid}.')
 
     @commands.dm_only()
     @commands.command(
@@ -98,7 +83,7 @@ class ClientCommands(commands.Cog):
             away=fortnitepy.AwayStatus.AWAY
         )
 
-        await ctx.send('Status set to away.')
+        await ctx.send('Status set to away, you can use !status to revert.')
         print(self.bot.message % f'Status set to away.')
 
     @commands.dm_only()
@@ -112,7 +97,7 @@ class ClientCommands(commands.Cog):
         async with aiohttp.ClientSession() as session:
             async with session.request(
                 method="GET",
-                url="https://api.github.com/repos/kaaaxcreators/fortnitepy/commits/master"
+                url="https://api.github.com/repos/kaaaxcreators/fortnitepy/commits/main"
             ) as request:
                 data = await request.json()
 

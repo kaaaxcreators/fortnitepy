@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
     
 setuptools.setup(
     name="BenBotAsyncNoAds",
-    version="2.6.0",
+    version="3.1.0",
     author="kaaaxcreators",
     description="Asynchronous Python wrapper for BenBot API without Ads.",
     long_description=long_description,

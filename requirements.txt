@@ -1,6 +1,5 @@
 .\BenBotAsyncNoAds
 fortnitepy
-BenBotAsync
 crayons
 FortniteAPIAsync
 aiofiles

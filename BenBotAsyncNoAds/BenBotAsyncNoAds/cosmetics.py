@@ -1,6 +1,7 @@
 from .enums import *
-
 from typing import List, Any
+
+from .exceptions import APIServerDown
 
 
 class BRCosmetic:
@@ -48,9 +49,9 @@ class BRCosmetic:
         self.name = data.get('name')
         self.description = data.get('description')
         self.short_description = data.get('shortDescription')
-        self.backend_type = BackendType(data.get('backendType'))
+        self.backend_type = BackendType(data.get('backendType')) if data.get('backendType') != None else None
         self.rarity = data.get('rarity')
-        self.backend_rarity = BackendRarity(data.get('backendRarity'))
+        self.backend_rarity = BackendRarity(data.get('backendRarity')) if data.get('backendRarity') != None else None
         self.set = data.get('set')
         self.set_text = data.get('setText')
         self.series = data.get('series')
@@ -78,6 +79,9 @@ class FortniteCosmetics:
             List of all cosmetics that exist in BRCosmetic objects.
         """
         data = await self.http.request(method="GET", url="/files/added", params=params)
+
+        if 'Api is currently updating' in str(data):
+            raise APIServerDown(data['error'])
 
         return [BRCosmetic(cosmetic) for cosmetic in data]
 

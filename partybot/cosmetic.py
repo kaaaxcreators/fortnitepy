@@ -49,7 +49,7 @@ class CosmeticCommands(commands.Cog):
         async with aiohttp.ClientSession() as session:
             request = await session.request(
                 method='GET',
-                url='https://benbotfn.tk/api/v1/assetProperties',
+                url='https://benbot.app/api/v1/assetProperties',
                 params={
                     'path': 'FortniteGame/Content/Athena/'
                             f'Items/CosmeticVariantTokens/{variant_token}.uasset'
@@ -288,8 +288,9 @@ class CosmeticCommands(commands.Cog):
     )
     async def purpleportal(self, ctx: fortnitepy.ext.commands.Context) -> None:
         skin_variants = self.bot.party.me.create_variants(
-            item='AthenaBackpack',
-            particle_config='Particle',
+            config_overrides={
+                'particle': 'Particle{}'
+            },
             particle=1
         )
 
@@ -326,7 +327,7 @@ class CosmeticCommands(commands.Cog):
         variant_id = await self.set_vtid(variant_token)
 
         if variant_id[1].lower() == 'particle':
-            skin_variants = self.bot.party.me.create_variants(particle_config='Particle', particle=1)
+            skin_variants = self.bot.party.me.create_variants(config_overrides={'particle': 'Particle{}'}, particle=1)
         else:
             skin_variants = self.bot.party.me.create_variants(**{variant_id[1].lower(): int(variant_id[2])})
 
@@ -367,7 +368,6 @@ class CosmeticCommands(commands.Cog):
 
         elif 'bid' in cosmetic_id.lower():
             cosmetic_variants = self.bot.party.me.create_variants(
-                item='AthenaBackpack',
                 **{variant_type: int(variant_int) if variant_int.isdigit() else variant_int}
             )
 
@@ -377,7 +377,6 @@ class CosmeticCommands(commands.Cog):
             )
         elif 'pickaxe_id' in cosmetic_id.lower():
             cosmetic_variants = self.bot.party.me.create_variants(
-                item='AthenaPickaxe',
                 **{variant_type: int(variant_int) if variant_int.isdigit() else variant_int}
             )
 
@@ -668,17 +667,17 @@ class CosmeticCommands(commands.Cog):
             await self.bot.party.me.set_outfit(
                 asset=cosmetic_id,
                 variants=variant_types[br_season] if br_season in variant_types else variant_types[2],
-                enlightenment=(br_season, level)
+                enlightenment=(br_season, skin_level)
             )
 
-            await ctx.send(f'Skin set to {character_id} at level {skin_level} (for Season 1{br_season}).')
+            await ctx.send(f'Skin set to {cosmetic_id} at level {skin_level} (for Season 1{br_season}).')
         elif 'bid' in cosmetic_id.lower():
             await self.bot.party.me.set_backpack(
                 asset=cosmetic_id,
                 variants=self.bot.party.me.create_variants(progressive=2),
-                enlightenment=(br_season, level)
+                enlightenment=(br_season, skin_level)
             )
-            await ctx.send(f'Backpack set to {character_id} at level {skin_level} (for Season 1{br_season}).')
+            await ctx.send(f'Backpack set to {cosmetic_id} at level {skin_level} (for Season 1{br_season}).')
 
         print(
             self.bot.message % f'Enlightenment for {cosmetic_id} set to level {skin_level} '
@@ -1158,28 +1157,31 @@ class CosmeticCommands(commands.Cog):
 
     @commands.dm_only()
     @commands.command(
+        aliases=['henchmen'],
         description="[Cosmetic] Sets the outfit of the client to a random Henchman skin.",
         help="Sets the outfit of the client to a random Henchman skin.\n"
              "Example: !henchman"
     )
     async def henchman(self, ctx: fortnitepy.ext.commands.Context) -> None:
         random_henchman = py_random.choice(
-            "CID_794_Athena_Commando_M_HenchmanBadShorts_D",
-            "CID_NPC_Athena_Commando_F_HenchmanSpyDark",
-            "CID_791_Athena_Commando_M_HenchmanGoodShorts_D",
-            "CID_780_Athena_Commando_M_HenchmanBadShorts",
-            "CID_NPC_Athena_Commando_M_HenchmanGood",
-            "CID_692_Athena_Commando_M_HenchmanTough",
-            "CID_707_Athena_Commando_M_HenchmanGood",
-            "CID_792_Athena_Commando_M_HenchmanBadShorts_B",
-            "CID_793_Athena_Commando_M_HenchmanBadShorts_C",
-            "CID_NPC_Athena_Commando_M_HenchmanBad",
-            "CID_790_Athena_Commando_M_HenchmanGoodShorts_C",
-            "CID_779_Athena_Commando_M_HenchmanGoodShorts",
-            "CID_NPC_Athena_Commando_F_RebirthDefault_Henchman",
-            "CID_NPC_Athena_Commando_F_HenchmanSpyGood",
-            "CID_706_Athena_Commando_M_HenchmanBad",
-            "CID_789_Athena_Commando_M_HenchmanGoodShorts_B"
+            [
+                "CID_794_Athena_Commando_M_HenchmanBadShorts_D",
+                "CID_NPC_Athena_Commando_F_HenchmanSpyDark",
+                "CID_791_Athena_Commando_M_HenchmanGoodShorts_D",
+                "CID_780_Athena_Commando_M_HenchmanBadShorts",
+                "CID_NPC_Athena_Commando_M_HenchmanGood",
+                "CID_692_Athena_Commando_M_HenchmanTough",
+                "CID_707_Athena_Commando_M_HenchmanGood",
+                "CID_792_Athena_Commando_M_HenchmanBadShorts_B",
+                "CID_793_Athena_Commando_M_HenchmanBadShorts_C",
+                "CID_NPC_Athena_Commando_M_HenchmanBad",
+                "CID_790_Athena_Commando_M_HenchmanGoodShorts_C",
+                "CID_779_Athena_Commando_M_HenchmanGoodShorts",
+                "CID_NPC_Athena_Commando_F_RebirthDefault_Henchman",
+                "CID_NPC_Athena_Commando_F_HenchmanSpyGood",
+                "CID_706_Athena_Commando_M_HenchmanBad",
+                "CID_789_Athena_Commando_M_HenchmanGoodShorts_B"
+            ]
         )
 
         await self.bot.party.me.set_outfit(
@@ -1212,9 +1214,11 @@ class CosmeticCommands(commands.Cog):
     )
     async def marauder(self, ctx: fortnitepy.ext.commands.Context) -> None:
         random_marauder = py_random.choice(
-            "CID_NPC_Athena_Commando_M_MarauderHeavy",
-            "CID_NPC_Athena_Commando_M_MarauderElite",
-            "CID_NPC_Athena_Commando_M_MarauderGrunt"
+            [
+                "CID_NPC_Athena_Commando_M_MarauderHeavy",
+                "CID_NPC_Athena_Commando_M_MarauderElite",
+                "CID_NPC_Athena_Commando_M_MarauderGrunt"
+            ]
         )
 
         await self.bot.party.me.set_outfit(
@@ -1328,4 +1332,3 @@ class CosmeticCommands(commands.Cog):
 
         await ctx.send(f'Skin set to {cosmetics[skin].id}.')
         print(self.bot.message % f"Set skin to: {cosmetics[skin].id}.")
-

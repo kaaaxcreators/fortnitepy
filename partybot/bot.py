@@ -3,14 +3,11 @@
 """
 “Commons Clause” License Condition v1.0
 Copyright Oli 2019-2020
-
 The Software is provided to you by the Licensor under the
 License, as defined below, subject to the following condition.
-
 Without limiting other conditions in the License, the grant
 of rights under the License will not include, and the License
 does not grant to you, the right to Sell the Software.
-
 For purposes of the foregoing, “Sell” means practicing any or
 all of the rights granted to you under the License to provide
 to third parties, for a fee or other consideration (including
@@ -20,9 +17,7 @@ value derives, entirely or substantially, from the functionality
 of the Software. Any license notice or attribution required by
 the License must also include this Commons Clause License
 Condition notice.
-
 Software: PartyBot (fortnitepy-bot)
-
 License: Apache 2.0
 """
 
@@ -48,36 +43,26 @@ import FortniteAPIAsync
 
 class PartyBot(commands.Bot):
     def __init__(self, settings: BotSettings, device_auths: DeviceAuths) -> None:
-        self.device_auths = device_auths
+        self.device_auths = device_auths.get_device_auth()
         self.settings = settings
 
         self.fortnite_api = FortniteAPIAsync.APIClient()
 
-        account_device_auths = self.device_auths.get_device_auth(
-            email=settings.email
-        )
-
         super().__init__(
             command_prefix='!',
-            auth=fortnitepy.AdvancedAuth(
-                email=self.settings.email,
-                password=self.settings.password,
-                prompt_authorization_code=True,
-                delete_existing_device_auths=True,
-                device_id=account_device_auths.device_id,
-                account_id=account_device_auths.account_id,
-                secret=account_device_auths.secret
+            auth=fortnitepy.DeviceAuth(
+                device_id=self.device_auths.device_id,
+                account_id=self.device_auths.account_id,
+                secret=self.device_auths.secret
             ),
             status=self.settings.status,
-            ad=self.settings.ad,
             platform=fortnitepy.Platform(self.settings.platform),
-            avatar=fortnitepy.Avatar(
-                asset=self.settings.cid,
-                background_colors=fortnitepy.KairosBackgroundColorPreset.PINK.value
-            )
+            ad=self.settings.ad
         )
 
-        self.message = f'[PartyBot] [{datetime.datetime.now().strftime("%H:%M:%S")}] %s'
+    @property
+    def message(self) -> str:
+        return f'[PartyBot] [{datetime.datetime.now().strftime("%H:%M:%S")}] %s'
 
     async def set_and_update_member_prop(self, schema_key: str, new_value: Any) -> None:
         prop = {schema_key: self.party.me.meta.set_prop(schema_key, new_value)}
@@ -102,6 +87,20 @@ class PartyBot(commands.Bot):
         
         if self.party.me.leader:
             await self.party.set_privacy(fortnitepy.PartyPrivacy.PUBLIC)
+
+        # discord_exists = await self.loop.run_in_executor(None, HelperFunctions.check_if_process_running, 'Discord')
+
+        # if discord_exists:
+        #     asyncio.get_event_loop().create_task(self.start_discord_rich_presence())
+
+        # NOTE: Ignore this commented out code below, I use it to generate the "docs".
+        # command_names = []
+        #
+        # for commands in self.commands:
+        #     command_names.append(commands.name)
+        #
+        # for command in command_names:
+        #     print(command)
 
         for pending in self.incoming_pending_friends:
             try:
@@ -155,6 +154,6 @@ class PartyBot(commands.Bot):
         elif isinstance(error, fortnitepy.ext.commands.errors.PrivateMessageOnly):
             pass
         else:
-            await ctx.send(f'When trying to process !{ctx.command.name}, an error occured: "{error}"\n'
+            await ctx.send(f'When trying to process !{ctx.command.name}, an error occurred: "{error}"\n'
                            f'Please report this on GitHub.')
             raise error
