@@ -6,3 +6,4 @@ FortniteAPIAsync
 aiofiles
 cryptography==3.2.1
 uvloop
+Flask
