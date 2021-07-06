@@ -120,12 +120,6 @@ async def set_default_loadout(client: fortnitepy.Client, config: dict, member: f
         await party_update_meta.me.clear_emote()  # Clears emote to allow the next emote to play.
         await party_update_meta.me.set_emote(asset=config['eid'])  # Plays the emote from config.
         if client.user.display_name != member.display_name:  # Welcomes the member who just joined.
-            async with aiohttp.ClientSession() as session:
-                async with session.request(
-                    method="POST",
-                    url="https://nodejsanalytics.server.kaaaxcreators.de/v1/fortnitepy/hit"
-                ) as r:
-                    await r.text()
             print(f"[PartyBot] [{time()}] {member.display_name} has joined the lobby.")
 
 
