@@ -1,3 +1,6 @@
+I dont play Fortnite as often anymore and dont need a bot.
+This bot doesnt work. Just use [xMistt/fortnitepy-bot](https://github.com/xMistt/fortnitepy-bot)
+
 # PartyBotNoAds
 
 A Fortnite HTTP/XMPP bot coded in Python with party capabilities rewritten by kaaaxcreators without Ads.
